@@ -66,8 +66,8 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .intro__contact { color: var(--muted); white-space: nowrap; }
 .intro__link { transition: color .2s; }
 .intro__link:hover { color: var(--accent); }
-.intro__arrow { display: inline-block; transition: transform .3s var(--ease); }
-.intro__contact:has(.intro__link:hover) .intro__arrow { transform: translateX(4px); }
+.intro__arrow { display: inline-block; transition: transform .3s var(--ease), color .2s; }
+.intro__contact:has(.intro__link:hover) .intro__arrow { transform: translateX(4px); color: var(--accent); }
 .services { margin-top: 16px; color: var(--muted); }
 .services b { font-weight: 400; }
 .svc { transition: color .2s; }
