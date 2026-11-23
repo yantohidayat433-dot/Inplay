@@ -24,7 +24,7 @@
 
 /* Base */
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 body {
   background: var(--bg);
   color: var(--ink);
@@ -35,13 +35,11 @@ body {
   letter-spacing: -0.01em;
   -webkit-font-smoothing: antialiased;
 }
-h1, h2 { font: inherit; }
+h1 { font: inherit; }
 a { color: inherit; text-decoration: none; }
 ::selection { background: var(--accent); color: var(--accent-ink); }
 .nw { white-space: nowrap; }
 strong { font-weight: 600; }
-.intro__bio strong { transition: color .2s; }
-@media (hover: hover) { .intro__bio strong:hover { color: var(--accent); } }
 img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .page { position: relative; padding: var(--pad) var(--pad) 0; }
 
@@ -56,22 +54,23 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   grid-template-columns: repeat(12, 1fr);
   column-gap: var(--pad);
 }
-.intro__bio, .services { grid-column: 1 / 9; }
 .intro__bio, .services {
+  grid-column: 1 / 9;
   text-wrap: pretty;
   font-size: 32px;
   line-height: 1.2;
   letter-spacing: -0.03em;
 }
 .intro__contact { color: var(--muted); white-space: nowrap; }
-.intro__link { transition: color .2s; }
-.intro__link:hover { color: var(--accent); }
+.intro__bio strong, .intro__link, .svc { transition: color .2s; }
 .intro__arrow { display: inline-block; transition: transform .3s var(--ease), color .2s; }
-.intro__contact:has(.intro__link:hover) .intro__arrow { transform: translateX(4px); color: var(--accent); }
 .services { margin-top: 16px; color: var(--muted); }
 .services b { font-weight: 400; }
-.svc { transition: color .2s; }
-@media (hover: hover) { .svc:hover { color: var(--accent); } }
+.intro__link:focus-visible { color: var(--accent); outline: 1px solid currentColor; outline-offset: 2px; }
+@media (hover: hover) {
+  .intro__bio strong:hover, .intro__link:hover, .svc:hover { color: var(--accent); }
+  .intro__contact:has(.intro__link:hover) .intro__arrow { transform: translateX(4px); color: var(--accent); }
+}
 
 /* Divider */
 .rule { border: 0; border-top: 1px solid var(--line); margin: 48px 0 32px; }
@@ -84,7 +83,6 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   row-gap: 48px;
   align-items: start;
 }
-.work { cursor: default; }
 .work__media {
   overflow: hidden;
   border-radius: 4px;
@@ -103,7 +101,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   display: flex;
   gap: 6px;
 }
-.work__cap span {
+.work__soon {
   color: var(--muted);
   opacity: 0;
   transform: translateX(-4px);
@@ -111,7 +109,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 }
 @media (hover: hover) {
   .work:hover .work__media img { transform: scale(1.035); filter: brightness(1.04); }
-  .work:hover .work__cap span { opacity: 1; transform: none; }
+  .work:hover .work__soon { opacity: 1; transform: none; }
 }
 
 /* Footer */
@@ -122,9 +120,10 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   color: var(--muted);
 }
 
-/* Tablet */
+/* Tablet: hand breaks off, text wraps */
 @media (max-width: 1199px) {
   .intro__bio, .services { font-size: 28px; }
+  .br { display: none; }
 }
 
 /* Phone */
@@ -138,24 +137,22 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .work__cap { font-size: 15px; }
 }
 
-/* Fixed line breaks */
+/* Desktop: hand breaks, type scales with the column below 1440 */
 @media (min-width: 1200px) {
   .intro__bio, .services {
     white-space: nowrap;
     font-size: min(32px, calc(((100vw - 13 * var(--pad)) * 2 / 3 + 7 * var(--pad)) / 29));
   }
 }
-@media (max-width: 1199px) {
-  .br { display: none; }
-}
-
 @media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
   * { transition: none !important; }
 }
 </style>
 </head>
 <body>
 <div class="page">
+<main>
   <section class="intro">
     <h1 class="intro__bio"><svg class="mark" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><path d="M18.3463 2.16413C20.7467 1.52094 23.6196 4.45934 24.7633 8.72663C26.8644 16.5681 25.0001 24.9991 13.9996 24.9991C3.13834 24.9989 0.997112 16.4625 3.06992 8.72663C4.21352 4.45931 7.08743 1.52113 9.48789 2.16413C11.1138 2.60001 12.1038 4.5679 12.2193 7.11824C12.7988 7.04106 13.3935 6.99911 13.9996 6.99909C14.5479 6.99909 15.0871 7.03337 15.6139 7.09675C15.734 4.55673 16.7248 2.5987 18.3463 2.16413Z" fill="currentColor"/><g class="mark__eyes"><path d="M10.4996 17.2686C9.73136 16.8252 8.93703 16.8208 8.29062 16.9532C7.36577 17.1429 6.82338 18.0808 7.12168 18.9766C7.33018 19.6026 7.73152 20.2889 8.49961 20.7325C9.26783 21.176 10.0631 21.1803 10.7096 21.0479C11.6344 20.8584 12.1765 19.9202 11.8785 19.0245C11.67 18.3983 11.268 17.7123 10.4996 17.2686Z"/><path d="M19.5875 16.9532C18.941 16.8207 18.1459 16.825 17.3775 17.2686C16.6096 17.7123 16.2081 18.3985 15.9996 19.0245C15.7018 19.92 16.2431 20.8581 17.1676 21.0479C17.8139 21.1804 18.6093 21.1758 19.3775 20.7325C20.1457 20.289 20.5469 19.6026 20.7555 18.9766C21.0538 18.0807 20.5125 17.1428 19.5875 16.9532Z"/></g></svg><strong>Никита Иванов</strong>, <span class="nw">AI-креатор</span>. Генерирую фото и&nbsp;видео <br class="br">для&nbsp;брендов: от&nbsp;рекламных визуалов и&nbsp;предметки без&nbsp;студии <br class="br">до&nbsp;роликов для&nbsp;соцсетей и&nbsp;анимации. Обучаю нейросеть <br class="br">на&nbsp;айдентике бренда, чтобы стиль, цвет и&nbsp;характер <br class="br">держались в&nbsp;каждом кадре. <span class="intro__contact">Написать&nbsp;<span class="intro__arrow">→</span> <a class="intro__link" href="https://t.me/">Telegram</a></span></h1>
 
@@ -166,56 +163,57 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
   <hr class="rule" />
 
-  <main class="works" id="works">
+  <section class="works">
     <figure class="work" style="grid-column: 1 / 9; --ar: 3 / 2">
       <div class="work__media"><img src="images/placeholder.webp" srcset="images/placeholder-960.webp 960w, images/placeholder.webp 1920w" sizes="(max-width: 700px) 100vw, 66vw" alt="" width="1920" height="1536" /></div>
-      <figcaption class="work__cap">Название бренда, рекламный ролик <span>скоро</span></figcaption>
+      <figcaption class="work__cap">Название бренда, рекламный ролик <span class="work__soon">скоро</span></figcaption>
     </figure>
     <figure class="work" style="grid-column: 10 / 13; --ar: 4 / 5">
       <div class="work__media"><img src="images/placeholder-960.webp" alt="" width="960" height="768" /></div>
-      <figcaption class="work__cap">Название бренда, AI-аватар <span>скоро</span></figcaption>
+      <figcaption class="work__cap">Название бренда, AI-аватар <span class="work__soon">скоро</span></figcaption>
     </figure>
 
     <figure class="work" style="grid-column: 1 / 4; --ar: 4 / 5">
       <div class="work__media"><img src="images/placeholder-960.webp" alt="" width="960" height="768" loading="lazy" /></div>
-      <figcaption class="work__cap">Название бренда, предметная съёмка <span>скоро</span></figcaption>
+      <figcaption class="work__cap">Название бренда, предметная съёмка <span class="work__soon">скоро</span></figcaption>
     </figure>
     <figure class="work" style="grid-column: 6 / 13; --ar: 3 / 2">
       <div class="work__media"><img src="images/placeholder.webp" srcset="images/placeholder-960.webp 960w, images/placeholder.webp 1920w" sizes="(max-width: 700px) 100vw, 58vw" alt="" width="1920" height="1536" loading="lazy" /></div>
-      <figcaption class="work__cap">Название бренда, анимационный ролик <span>скоро</span></figcaption>
+      <figcaption class="work__cap">Название бренда, анимационный ролик <span class="work__soon">скоро</span></figcaption>
     </figure>
 
     <figure class="work" style="grid-column: 1 / 8; --ar: 3 / 2">
       <div class="work__media"><img src="images/placeholder.webp" srcset="images/placeholder-960.webp 960w, images/placeholder.webp 1920w" sizes="(max-width: 700px) 100vw, 58vw" alt="" width="1920" height="1536" loading="lazy" /></div>
-      <figcaption class="work__cap">Название бренда, сезонная кампания <span>скоро</span></figcaption>
+      <figcaption class="work__cap">Название бренда, сезонная кампания <span class="work__soon">скоро</span></figcaption>
     </figure>
     <figure class="work" style="grid-column: 9 / 13; --ar: 4 / 5">
       <div class="work__media"><img src="images/placeholder-960.webp" alt="" width="960" height="768" loading="lazy" /></div>
-      <figcaption class="work__cap">Название бренда, нейрофотосессия <span>скоро</span></figcaption>
+      <figcaption class="work__cap">Название бренда, нейрофотосессия <span class="work__soon">скоро</span></figcaption>
     </figure>
 
     <figure class="work" style="grid-column: 1 / 6; --ar: 4 / 5">
       <div class="work__media"><img src="images/placeholder-960.webp" alt="" width="960" height="768" loading="lazy" /></div>
-      <figcaption class="work__cap">Название бренда, фуд-съёмка <span>скоро</span></figcaption>
+      <figcaption class="work__cap">Название бренда, фуд-съёмка <span class="work__soon">скоро</span></figcaption>
     </figure>
     <figure class="work" style="grid-column: 7 / 13; --ar: 3 / 2">
       <div class="work__media"><img src="images/placeholder.webp" srcset="images/placeholder-960.webp 960w, images/placeholder.webp 1920w" sizes="(max-width: 700px) 100vw, 50vw" alt="" width="1920" height="1536" loading="lazy" /></div>
-      <figcaption class="work__cap">Название бренда, OLV <span>скоро</span></figcaption>
+      <figcaption class="work__cap">Название бренда, OLV <span class="work__soon">скоро</span></figcaption>
     </figure>
 
     <figure class="work" style="grid-column: 1 / 6; --ar: 4 / 5">
       <div class="work__media"><img src="images/placeholder-960.webp" alt="" width="960" height="768" loading="lazy" /></div>
-      <figcaption class="work__cap">Название бренда, маскот <span>скоро</span></figcaption>
+      <figcaption class="work__cap">Название бренда, маскот <span class="work__soon">скоро</span></figcaption>
     </figure>
     <figure class="work" style="grid-column: 6 / 11; --ar: 4 / 5">
       <div class="work__media"><img src="images/placeholder-960.webp" alt="" width="960" height="768" loading="lazy" /></div>
-      <figcaption class="work__cap">Название бренда, 3D-изображения <span>скоро</span></figcaption>
+      <figcaption class="work__cap">Название бренда, 3D-изображения <span class="work__soon">скоро</span></figcaption>
     </figure>
-  </main>
+  </section>
+</main>
 
   <footer class="foot">
     <span>© Никита Иванов, 2026</span>
-    <a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false">наверх</a>
+    <a href="#">наверх</a>
   </footer>
 </div>
 </body>
