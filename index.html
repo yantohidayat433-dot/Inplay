@@ -140,6 +140,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .rule { margin: 24px 0; }
   .works { grid-template-columns: 1fr; row-gap: 32px; }
   .work { grid-column: 1 !important; }
+  .work__media { aspect-ratio: 4 / 5; }
   .work__cap { font-size: 15px; }
 }
 
@@ -171,47 +172,47 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
   <section class="works">
     <figure class="work" style="grid-column: 1 / 9; --ar: 3 / 2">
-      <div class="work__media"><img src="images/placeholder.webp" srcset="images/placeholder-960.webp 960w, images/placeholder.webp 1920w" sizes="(max-width: 700px) 100vw, 66vw" alt="" width="1920" height="1536" /></div>
+      <div class="work__media"><picture><source media="(max-width: 700px)" srcset="images/placeholder-m.webp" width="1080" height="1350" /><img src="images/placeholder.webp" srcset="images/placeholder-960.webp 960w, images/placeholder.webp 1920w" sizes="66vw" alt="" width="1920" height="1536" /></picture></div>
       <figcaption class="work__cap">Название бренда, рекламный ролик <span class="work__soon">скоро</span></figcaption>
     </figure>
     <figure class="work" style="grid-column: 10 / 13; --ar: 4 / 5">
-      <div class="work__media"><img src="images/placeholder-960.webp" alt="" width="960" height="768" /></div>
+      <div class="work__media"><picture><source media="(max-width: 700px)" srcset="images/placeholder-m.webp" width="1080" height="1350" /><img src="images/placeholder-960.webp" alt="" width="960" height="768" /></picture></div>
       <figcaption class="work__cap">Название бренда, <span class="nw">AI-аватар</span> <span class="work__soon">скоро</span></figcaption>
     </figure>
 
     <figure class="work" style="grid-column: 1 / 4; --ar: 4 / 5">
-      <div class="work__media"><img src="images/placeholder-960.webp" alt="" width="960" height="768" loading="lazy" /></div>
+      <div class="work__media"><picture><source media="(max-width: 700px)" srcset="images/placeholder-m.webp" width="1080" height="1350" /><img src="images/placeholder-960.webp" alt="" width="960" height="768" loading="lazy" /></picture></div>
       <figcaption class="work__cap">Название бренда, предметная съёмка <span class="work__soon">скоро</span></figcaption>
     </figure>
     <figure class="work" style="grid-column: 6 / 13; --ar: 3 / 2">
-      <div class="work__media"><img src="images/placeholder.webp" srcset="images/placeholder-960.webp 960w, images/placeholder.webp 1920w" sizes="(max-width: 700px) 100vw, 58vw" alt="" width="1920" height="1536" loading="lazy" /></div>
+      <div class="work__media"><picture><source media="(max-width: 700px)" srcset="images/placeholder-m.webp" width="1080" height="1350" /><img src="images/placeholder.webp" srcset="images/placeholder-960.webp 960w, images/placeholder.webp 1920w" sizes="58vw" alt="" width="1920" height="1536" loading="lazy" /></picture></div>
       <figcaption class="work__cap">Название бренда, анимационный ролик <span class="work__soon">скоро</span></figcaption>
     </figure>
 
     <figure class="work" style="grid-column: 1 / 8; --ar: 3 / 2">
-      <div class="work__media"><img src="images/placeholder.webp" srcset="images/placeholder-960.webp 960w, images/placeholder.webp 1920w" sizes="(max-width: 700px) 100vw, 58vw" alt="" width="1920" height="1536" loading="lazy" /></div>
+      <div class="work__media"><picture><source media="(max-width: 700px)" srcset="images/placeholder-m.webp" width="1080" height="1350" /><img src="images/placeholder.webp" srcset="images/placeholder-960.webp 960w, images/placeholder.webp 1920w" sizes="58vw" alt="" width="1920" height="1536" loading="lazy" /></picture></div>
       <figcaption class="work__cap">Название бренда, сезонная кампания <span class="work__soon">скоро</span></figcaption>
     </figure>
     <figure class="work" style="grid-column: 9 / 13; --ar: 4 / 5">
-      <div class="work__media"><img src="images/placeholder-960.webp" alt="" width="960" height="768" loading="lazy" /></div>
+      <div class="work__media"><picture><source media="(max-width: 700px)" srcset="images/placeholder-m.webp" width="1080" height="1350" /><img src="images/placeholder-960.webp" alt="" width="960" height="768" loading="lazy" /></picture></div>
       <figcaption class="work__cap">Название бренда, нейрофотосессия <span class="work__soon">скоро</span></figcaption>
     </figure>
 
     <figure class="work" style="grid-column: 1 / 6; --ar: 4 / 5">
-      <div class="work__media"><img src="images/placeholder-960.webp" alt="" width="960" height="768" loading="lazy" /></div>
+      <div class="work__media"><picture><source media="(max-width: 700px)" srcset="images/placeholder-m.webp" width="1080" height="1350" /><img src="images/placeholder-960.webp" alt="" width="960" height="768" loading="lazy" /></picture></div>
       <figcaption class="work__cap">Название бренда, <span class="nw">фуд-съёмка</span> <span class="work__soon">скоро</span></figcaption>
     </figure>
     <figure class="work" style="grid-column: 7 / 13; --ar: 3 / 2">
-      <div class="work__media"><img src="images/placeholder.webp" srcset="images/placeholder-960.webp 960w, images/placeholder.webp 1920w" sizes="(max-width: 700px) 100vw, 50vw" alt="" width="1920" height="1536" loading="lazy" /></div>
+      <div class="work__media"><picture><source media="(max-width: 700px)" srcset="images/placeholder-m.webp" width="1080" height="1350" /><img src="images/placeholder.webp" srcset="images/placeholder-960.webp 960w, images/placeholder.webp 1920w" sizes="50vw" alt="" width="1920" height="1536" loading="lazy" /></picture></div>
       <figcaption class="work__cap">Название бренда, OLV <span class="work__soon">скоро</span></figcaption>
     </figure>
 
     <figure class="work" style="grid-column: 1 / 6; --ar: 4 / 5">
-      <div class="work__media"><img src="images/placeholder-960.webp" alt="" width="960" height="768" loading="lazy" /></div>
+      <div class="work__media"><picture><source media="(max-width: 700px)" srcset="images/placeholder-m.webp" width="1080" height="1350" /><img src="images/placeholder-960.webp" alt="" width="960" height="768" loading="lazy" /></picture></div>
       <figcaption class="work__cap">Название бренда, маскот <span class="work__soon">скоро</span></figcaption>
     </figure>
     <figure class="work" style="grid-column: 6 / 11; --ar: 4 / 5">
-      <div class="work__media"><img src="images/placeholder-960.webp" alt="" width="960" height="768" loading="lazy" /></div>
+      <div class="work__media"><picture><source media="(max-width: 700px)" srcset="images/placeholder-m.webp" width="1080" height="1350" /><img src="images/placeholder-960.webp" alt="" width="960" height="768" loading="lazy" /></picture></div>
       <figcaption class="work__cap">Название бренда, <span class="nw">3D-изображения</span> <span class="work__soon">скоро</span></figcaption>
     </figure>
   </section>
