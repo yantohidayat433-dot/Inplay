@@ -57,7 +57,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   margin-top: 143px;
 }
 .intro__bio, .services { grid-column: 1 / 4; padding: 0 18px; }
-.intro__bio {
+.intro__bio, .services {
   font-size: 36px;
   line-height: 1.125;
   letter-spacing: -0.03em;
@@ -69,13 +69,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .intro__link span { display: inline-block; transition: transform .3s var(--ease); }
 .intro__link:hover { color: var(--ink); }
 .intro__link:hover span { transform: translateX(6px); }
-.services {
-  margin-top: 32px;
-  color: var(--muted);
-  letter-spacing: -0.025em;
-  line-height: 1.22;
-}
-.services p { max-width: 380px; }
+.services { margin-top: 1.125em; color: var(--muted); }
 .services b { font-weight: 400; color: var(--ink); }
 .services__item { transition: color .3s; }
 @media (hover: hover) { .services__item:hover { color: var(--ink); } }
@@ -132,7 +126,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .top { padding: 6px 6px 0; }
   .intro { grid-template-columns: 1fr; margin-top: 96px; }
   .intro__bio, .services { grid-column: 1; padding: 0 6px; }
-  .intro__bio { font-size: 30px; }
+  .intro__bio, .services { font-size: 30px; }
 }
 
 /* Phone */
@@ -142,8 +136,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .logo { font-size: 18px; }
   .intro { margin-top: 72px; }
   .intro__bio, .services { padding: 0; }
-  .intro__bio { font-size: 25px; }
-  .services { margin-top: 24px; }
+  .intro__bio, .services { font-size: 25px; }
   .works { grid-template-columns: 1fr; row-gap: 32px; margin-top: 56px; }
   .work { grid-column: 1 !important; }
   .work__cap { font-size: 15px; }
