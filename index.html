@@ -46,7 +46,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   grid-template-columns: repeat(4, 1fr);
   column-gap: var(--gap);
 }
-.intro__bio, .services { grid-column: 1 / 4; }
+.intro__bio, .services { grid-column: 1 / -1; }
 .intro__bio, .services {
   font-size: 36px;
   line-height: 1.05;
@@ -59,7 +59,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .intro__link span { display: inline-block; transition: transform .3s var(--ease); }
 .intro__link:hover { color: var(--ink); }
 .intro__link:hover span { transform: translateX(6px); }
-.services { margin-top: 1.05em; color: var(--muted); }
+.services { margin-top: 18px; color: var(--muted); }
 .services b { font-weight: 400; color: var(--ink); }
 .services__item { transition: color .3s; }
 @media (hover: hover) { .services__item:hover { color: var(--ink); } }
@@ -125,6 +125,10 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .work__cap { font-size: 15px; }
 }
 
+@media (max-width: 760px) {
+  .intro br { display: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
 }
@@ -133,10 +137,10 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 <body>
 <div class="page">
   <section class="intro">
-    <h1 class="intro__bio"><strong>Никита Иванов</strong>, <span class="nw">AI-креатор</span>. Генерирую фото и&nbsp;видео для&nbsp;брендов: от&nbsp;рекламных визуалов и&nbsp;предметки без&nbsp;студии до&nbsp;роликов для&nbsp;соцсетей и&nbsp;анимации. Обучаю нейросеть на&nbsp;айдентике бренда, чтобы стиль, цвет и&nbsp;характер держались в&nbsp;каждом кадре. <a class="intro__link" href="https://t.me/">Написать в&nbsp;Telegram&nbsp;<span>→</span></a></h1>
+    <h1 class="intro__bio"><strong>Никита Иванов</strong>, <span class="nw">AI-креатор</span>. Генерирую фото и&nbsp;видео <br>для&nbsp;брендов: от&nbsp;рекламных визуалов и&nbsp;предметки <br>без&nbsp;студии до&nbsp;роликов для&nbsp;соцсетей и&nbsp;анимации. <br>Обучаю нейросеть на&nbsp;айдентике бренда, чтобы <br>стиль, цвет и&nbsp;характер держались в&nbsp;каждом кадре. <br><a class="intro__link" href="https://t.me/">Написать в&nbsp;Telegram&nbsp;<span>→</span></a></h1>
 
     <div class="services">
-      <p><span class="services__item"><b>Могу помочь с&nbsp;видео</b>: ролики для&nbsp;соцсетей, продуктовые и&nbsp;анимационные, OLV, цифровая наружка и&nbsp;заставки для&nbsp;мероприятий.</span> <span class="services__item"><b>С&nbsp;фото</b>: рекламные визуалы, предметка для&nbsp;каталогов и&nbsp;маркетплейсов, фуд, нейрофотосессии, <span class="nw">AI-аватары</span>, маскоты, 3D и&nbsp;иллюстрации.</span> <span class="services__item"><b>И&nbsp;с&nbsp;регулярным потоком</b>: соберу стайлгайд и&nbsp;референсы, чтобы SMM, каталоги и&nbsp;сезонные кампании не&nbsp;расползались по&nbsp;стилю.</span></p>
+      <p><span class="services__item"><b>Могу помочь с&nbsp;видео</b>: ролики для&nbsp;соцсетей, <br>продуктовые и&nbsp;анимационные, OLV, цифровая <br>наружка и&nbsp;заставки для&nbsp;мероприятий.</span> <span class="services__item"><b>С&nbsp;фото</b>: <br>рекламные визуалы, предметка для&nbsp;каталогов и <br>маркетплейсов, фуд, нейрофотосессии, <span class="nw">AI-аватары</span>, <br>маскоты, 3D и&nbsp;иллюстрации.</span> <span class="services__item"><b>И&nbsp;с&nbsp;регулярным <br>потоком</b>: соберу стайлгайд и&nbsp;референсы, чтобы <br>SMM, каталоги и&nbsp;сезонные кампании не <br>расползались по&nbsp;стилю.</span></p>
     </div>
   </section>
 
