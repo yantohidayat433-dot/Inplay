@@ -77,23 +77,48 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
 /* Works */
 .works {
+  --work-gap: clamp(24px, 2.5vw, 40px);
+  --work-row-gap: clamp(40px, 3.6vw, 56px);
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  column-gap: var(--pad);
-  row-gap: 48px;
-  align-items: start;
+  row-gap: var(--work-row-gap);
+}
+.work-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--work-gap);
+  width: 94%;
+}
+.work-row:nth-child(even) { justify-self: end; }
+.work {
+  flex: 1 1 0;
+  flex-grow: calc(var(--ar, 16 / 9));
+  min-width: 0;
+}
+.work-row--lead {
+  /* The first frame shares the intro's eight-column width. */
+  --lead-width: calc((2 * 100% - var(--pad)) / 3);
+  width: 100%;
+}
+.work-row--lead .work {
+  flex: 0 0 calc(var(--lead-width) * (var(--ar, 16 / 9)) * 9 / 16);
+}
+.work-row--portraits {
+  width: 100%;
+  justify-content: center;
+}
+.work-row--portraits .work {
+  flex: 0 1 calc(clamp(280px, 39vw, 560px) * (var(--ar, 16 / 9)));
 }
 .work__media {
   overflow: hidden;
   border-radius: 4px;
   background: var(--media-bg);
-  aspect-ratio: var(--ar, 3 / 2);
+  aspect-ratio: var(--ar, 16 / 9);
 }
 .work__media img {
   transform: scale(1.001);
   transition: transform .9s var(--ease), filter .9s var(--ease);
 }
-.work__media--video { aspect-ratio: var(--ar, 16 / 9); }
 .work__media video {
   display: block;
   width: 100%;
@@ -134,10 +159,9 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .br { display: none; }
 }
 
-/* Small tablet: cases two to a row */
+/* Small tablet: use the full width for each pair */
 @media (max-width: 900px) {
-  .works { grid-template-columns: 1fr 1fr; }
-  .work { grid-column: auto !important; }
+  .work-row { width: 100%; }
 }
 
 /* Phone */
@@ -146,8 +170,12 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .intro__bio, .services { grid-column: 1; font-size: 25px; }
   .mark { position: static; float: left; margin: 1px 8px 0 0; }
   .rule { margin: 24px 0; }
-  .works { grid-template-columns: 1fr; row-gap: 32px; }
-  .work { grid-column: 1 !important; }
+  .works { --work-row-gap: 32px; }
+  .work-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--work-row-gap);
+  }
   .work__media:not(.work__media--video) { aspect-ratio: 4 / 5; }
   .work__cap { font-size: 15px; }
 }
@@ -179,277 +207,309 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   <hr class="rule" />
 
   <section class="works">
-    <figure class="work" style="grid-column: 1 / 9">
-      <div class="work__media work__media--video">
-        <video controls playsinline preload="none" poster="images/fashion-poster.webp" aria-label="Фэшн-ролик">
-          <source src="videos/fashion.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <figcaption class="work__cap">Фэшн-ролик</figcaption>
-    </figure>
-    <figure class="work" style="grid-column: 10 / 13; --ar: 3 / 4">
-      <div class="work__media work__media--video">
-        <video controls playsinline preload="metadata" poster="images/fashion-backstage-poster.webp" aria-label="Фэшн-ролик на съёмочной площадке">
-          <source src="videos/fashion-backstage.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <figcaption class="work__cap">Фэшн-ролик на съёмочной площадке</figcaption>
-    </figure>
+    <div class="work-row work-row--lead">
+      <figure class="work">
+        <div class="work__media work__media--video">
+          <video controls playsinline preload="none" poster="images/fashion-poster.webp" aria-label="Фэшн-ролик">
+            <source src="videos/fashion.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="work__cap">Фэшн-ролик</figcaption>
+      </figure>
+      <figure class="work" style="--ar: 3 / 4">
+        <div class="work__media work__media--video">
+          <video controls playsinline preload="metadata" poster="images/fashion-backstage-poster.webp" aria-label="Фэшн-ролик на съёмочной площадке">
+            <source src="videos/fashion-backstage.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="work__cap">Фэшн-ролик на съёмочной площадке</figcaption>
+      </figure>
+    </div>
 
-    <figure class="work" style="grid-column: 1 / 4; --ar: 9 / 16">
-      <div class="work__media work__media--video">
-        <video controls playsinline preload="metadata" poster="images/skincare-outdoors-poster.webp" aria-label="Бьюти-съёмка на солнце">
-          <source src="videos/skincare-outdoors.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <figcaption class="work__cap">Бьюти-съёмка на солнце</figcaption>
-    </figure>
-    <figure class="work" style="grid-column: 6 / 13">
-      <div class="work__media work__media--video">
-        <video controls playsinline preload="none" poster="images/beauty-poster.webp" aria-label="Бьюти-ролик">
-          <source src="videos/beauty.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <figcaption class="work__cap">Бьюти-ролик</figcaption>
-    </figure>
+    <div class="work-row">
+      <figure class="work" style="--ar: 9 / 16">
+        <div class="work__media work__media--video">
+          <video controls playsinline preload="metadata" poster="images/skincare-outdoors-poster.webp" aria-label="Бьюти-съёмка на солнце">
+            <source src="videos/skincare-outdoors.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="work__cap">Бьюти-съёмка на солнце</figcaption>
+      </figure>
+      <figure class="work">
+        <div class="work__media work__media--video">
+          <video controls playsinline preload="none" poster="images/beauty-poster.webp" aria-label="Бьюти-ролик">
+            <source src="videos/beauty.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="work__cap">Бьюти-ролик</figcaption>
+      </figure>
+    </div>
 
-    <figure class="work" style="grid-column: 1 / 8">
-      <div class="work__media work__media--video">
-        <video controls playsinline preload="none" loading="lazy" poster="images/automotive-poster.webp" aria-label="Автомобильный ролик">
-          <source src="videos/automotive.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <figcaption class="work__cap">Автомобильный ролик</figcaption>
-    </figure>
-    <figure class="work" style="grid-column: 9 / 13; --ar: 3 / 4">
-      <div class="work__media work__media--video">
-        <video controls playsinline preload="none" loading="lazy" poster="images/desert-fashion-poster.webp" aria-label="Фэшн-ролик в пустыне">
-          <source src="videos/desert-fashion.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <figcaption class="work__cap">Фэшн-ролик в пустыне</figcaption>
-    </figure>
+    <div class="work-row">
+      <figure class="work">
+        <div class="work__media work__media--video">
+          <video controls playsinline preload="none" loading="lazy" poster="images/automotive-poster.webp" aria-label="Автомобильный ролик">
+            <source src="videos/automotive.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="work__cap">Автомобильный ролик</figcaption>
+      </figure>
+      <figure class="work" style="--ar: 3 / 4">
+        <div class="work__media work__media--video">
+          <video controls playsinline preload="none" loading="lazy" poster="images/desert-fashion-poster.webp" aria-label="Фэшн-ролик в пустыне">
+            <source src="videos/desert-fashion.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="work__cap">Фэшн-ролик в пустыне</figcaption>
+      </figure>
+    </div>
 
-    <figure class="work" style="grid-column: 1 / 6; --ar: 3 / 4">
-      <div class="work__media work__media--video">
-        <video controls playsinline preload="none" loading="lazy" poster="images/jewelry-portrait-poster.webp" aria-label="Ювелирный портрет">
-          <source src="videos/jewelry-portrait.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <figcaption class="work__cap">Ювелирный портрет</figcaption>
-    </figure>
-    <figure class="work" style="grid-column: 7 / 13">
-      <div class="work__media work__media--video">
-        <video controls playsinline preload="none" loading="lazy" poster="images/coastal-fashion-poster.webp" aria-label="Фэшн-ролик на побережье">
-          <source src="videos/coastal-fashion.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <figcaption class="work__cap">Фэшн-ролик на побережье</figcaption>
-    </figure>
+    <div class="work-row">
+      <figure class="work" style="--ar: 3 / 4">
+        <div class="work__media work__media--video">
+          <video controls playsinline preload="none" loading="lazy" poster="images/jewelry-portrait-poster.webp" aria-label="Ювелирный портрет">
+            <source src="videos/jewelry-portrait.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="work__cap">Ювелирный портрет</figcaption>
+      </figure>
+      <figure class="work">
+        <div class="work__media work__media--video">
+          <video controls playsinline preload="none" loading="lazy" poster="images/coastal-fashion-poster.webp" aria-label="Фэшн-ролик на побережье">
+            <source src="videos/coastal-fashion.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="work__cap">Фэшн-ролик на побережье</figcaption>
+      </figure>
+    </div>
 
-    <figure class="work" style="grid-column: 1 / 6; --ar: 3 / 4">
-      <div class="work__media work__media--video">
-        <video controls playsinline preload="none" loading="lazy" poster="images/jewelry-bracelet-poster.webp" aria-label="Браслет крупным планом">
-          <source src="videos/jewelry-bracelet.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <figcaption class="work__cap">Браслет крупным планом</figcaption>
-    </figure>
-    <figure class="work" style="grid-column: 6 / 11; --ar: 3 / 4">
-      <div class="work__media work__media--video">
-        <video controls playsinline preload="none" loading="lazy" poster="images/jewelry-ring-poster.webp" aria-label="Кольцо крупным планом">
-          <source src="videos/jewelry-ring.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <figcaption class="work__cap">Кольцо крупным планом</figcaption>
-    </figure>
+    <div class="work-row work-row--portraits">
+      <figure class="work" style="--ar: 3 / 4">
+        <div class="work__media work__media--video">
+          <video controls playsinline preload="none" loading="lazy" poster="images/jewelry-bracelet-poster.webp" aria-label="Браслет крупным планом">
+            <source src="videos/jewelry-bracelet.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="work__cap">Браслет крупным планом</figcaption>
+      </figure>
+      <figure class="work" style="--ar: 3 / 4">
+        <div class="work__media work__media--video">
+          <video controls playsinline preload="none" loading="lazy" poster="images/jewelry-ring-poster.webp" aria-label="Кольцо крупным планом">
+            <source src="videos/jewelry-ring.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="work__cap">Кольцо крупным планом</figcaption>
+      </figure>
+    </div>
 
-    <figure class="work" style="grid-column: 1 / 8">
-      <div class="work__media work__media--video">
-        <video controls playsinline preload="none" loading="lazy" poster="images/serum-demo-poster.webp" aria-label="Демонстрация сыворотки">
-          <source src="videos/serum-demo.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <figcaption class="work__cap">Демонстрация сыворотки</figcaption>
-    </figure>
-    <figure class="work" style="grid-column: 9 / 13; --ar: 9 / 16">
-      <div class="work__media work__media--video">
-        <video controls playsinline preload="none" loading="lazy" poster="images/ugc-product-poster.webp" aria-label="UGC, демонстрация продукта">
-          <source src="videos/ugc-product.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <figcaption class="work__cap">UGC, демонстрация продукта</figcaption>
-    </figure>
+    <div class="work-row">
+      <figure class="work">
+        <div class="work__media work__media--video">
+          <video controls playsinline preload="none" loading="lazy" poster="images/serum-demo-poster.webp" aria-label="Демонстрация сыворотки">
+            <source src="videos/serum-demo.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="work__cap">Демонстрация сыворотки</figcaption>
+      </figure>
+      <figure class="work" style="--ar: 9 / 16">
+        <div class="work__media work__media--video">
+          <video controls playsinline preload="none" loading="lazy" poster="images/ugc-product-poster.webp" aria-label="UGC, демонстрация продукта">
+            <source src="videos/ugc-product.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="work__cap">UGC, демонстрация продукта</figcaption>
+      </figure>
+    </div>
 
-    <figure class="work" style="grid-column: 1 / 4; --ar: 3 / 4">
-      <div class="work__media work__media--video">
-        <video controls playsinline preload="none" loading="lazy" poster="images/jewelry-sunlight-poster.webp" aria-label="Украшения в солнечном свете">
-          <source src="videos/jewelry-sunlight.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <figcaption class="work__cap">Украшения в солнечном свете</figcaption>
-    </figure>
-    <figure class="work" style="grid-column: 6 / 13">
-      <div class="work__media work__media--video">
-        <video controls playsinline preload="none" loading="lazy" poster="images/poolside-products-poster.webp" aria-label="Косметика у бассейна">
-          <source src="videos/poolside-products.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <figcaption class="work__cap">Косметика у бассейна</figcaption>
-    </figure>
+    <div class="work-row">
+      <figure class="work" style="--ar: 3 / 4">
+        <div class="work__media work__media--video">
+          <video controls playsinline preload="none" loading="lazy" poster="images/jewelry-sunlight-poster.webp" aria-label="Украшения в солнечном свете">
+            <source src="videos/jewelry-sunlight.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="work__cap">Украшения в солнечном свете</figcaption>
+      </figure>
+      <figure class="work">
+        <div class="work__media work__media--video">
+          <video controls playsinline preload="none" loading="lazy" poster="images/poolside-products-poster.webp" aria-label="Косметика у бассейна">
+            <source src="videos/poolside-products.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="work__cap">Косметика у бассейна</figcaption>
+      </figure>
+    </div>
 
-    <figure class="work" style="grid-column: 1 / 7">
-      <div class="work__media work__media--video">
-        <video controls playsinline preload="none" loading="lazy" poster="images/cheetos-concept-poster.webp" aria-label="Cheetos, анимационный концепт">
-          <source src="videos/cheetos-concept.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <figcaption class="work__cap">Cheetos, анимационный концепт</figcaption>
-    </figure>
-    <figure class="work" style="grid-column: 8 / 13">
-      <div class="work__media work__media--video">
-        <video controls playsinline preload="none" loading="lazy" poster="images/raspberry-drink-poster.webp" aria-label="Продуктовый ролик с малиной">
-          <source src="videos/raspberry-drink.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <figcaption class="work__cap">Продуктовый ролик с малиной</figcaption>
-    </figure>
+    <div class="work-row">
+      <figure class="work">
+        <div class="work__media work__media--video">
+          <video controls playsinline preload="none" loading="lazy" poster="images/cheetos-concept-poster.webp" aria-label="Cheetos, анимационный концепт">
+            <source src="videos/cheetos-concept.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="work__cap">Cheetos, анимационный концепт</figcaption>
+      </figure>
+      <figure class="work">
+        <div class="work__media work__media--video">
+          <video controls playsinline preload="none" loading="lazy" poster="images/raspberry-drink-poster.webp" aria-label="Продуктовый ролик с малиной">
+            <source src="videos/raspberry-drink.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="work__cap">Продуктовый ролик с малиной</figcaption>
+      </figure>
+    </div>
 
-    <figure class="work" style="grid-column: 1 / 9">
-      <div class="work__media work__media--video">
-        <video controls playsinline preload="metadata" loading="lazy" poster="images/seaside-white-dress-poster.webp" aria-label="Фэшн-ролик у моря">
-          <source src="videos/seaside-white-dress.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <figcaption class="work__cap">Фэшн-ролик у моря</figcaption>
-    </figure>
-    <figure class="work" style="grid-column: 10 / 13; --ar: 9 / 16">
-      <div class="work__media work__media--video">
-        <video controls playsinline preload="metadata" loading="lazy" poster="images/stadium-sports-poster.webp" aria-label="Спортивный ролик на стадионе">
-          <source src="videos/stadium-sports.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <figcaption class="work__cap">Спортивный ролик на стадионе</figcaption>
-    </figure>
+    <div class="work-row">
+      <figure class="work">
+        <div class="work__media work__media--video">
+          <video controls playsinline preload="metadata" loading="lazy" poster="images/seaside-white-dress-poster.webp" aria-label="Фэшн-ролик у моря">
+            <source src="videos/seaside-white-dress.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="work__cap">Фэшн-ролик у моря</figcaption>
+      </figure>
+      <figure class="work" style="--ar: 9 / 16">
+        <div class="work__media work__media--video">
+          <video controls playsinline preload="metadata" loading="lazy" poster="images/stadium-sports-poster.webp" aria-label="Спортивный ролик на стадионе">
+            <source src="videos/stadium-sports.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="work__cap">Спортивный ролик на стадионе</figcaption>
+      </figure>
+    </div>
 
-    <figure class="work" style="grid-column: 1 / 4; --ar: 9 / 16">
-      <div class="work__media work__media--video">
-        <video controls playsinline preload="metadata" loading="lazy" poster="images/coastal-drive-poster.webp" aria-label="Автомобиль на прибрежной дороге">
-          <source src="videos/coastal-drive.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <figcaption class="work__cap">Автомобиль на прибрежной дороге</figcaption>
-    </figure>
-    <figure class="work" style="grid-column: 6 / 13; --ar: 305 / 193">
-      <div class="work__media work__media--video">
-        <video controls playsinline preload="metadata" loading="lazy" poster="images/car-in-motion-poster.webp" aria-label="Автомобиль в движении">
-          <source src="videos/car-in-motion.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <figcaption class="work__cap">Автомобиль в движении</figcaption>
-    </figure>
+    <div class="work-row">
+      <figure class="work" style="--ar: 9 / 16">
+        <div class="work__media work__media--video">
+          <video controls playsinline preload="metadata" loading="lazy" poster="images/coastal-drive-poster.webp" aria-label="Автомобиль на прибрежной дороге">
+            <source src="videos/coastal-drive.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="work__cap">Автомобиль на прибрежной дороге</figcaption>
+      </figure>
+      <figure class="work" style="--ar: 305 / 193">
+        <div class="work__media work__media--video">
+          <video controls playsinline preload="metadata" loading="lazy" poster="images/car-in-motion-poster.webp" aria-label="Автомобиль в движении">
+            <source src="videos/car-in-motion.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="work__cap">Автомобиль в движении</figcaption>
+      </figure>
+    </div>
 
-    <figure class="work" style="grid-column: 1 / 8">
-      <div class="work__media work__media--video">
-        <video controls playsinline preload="metadata" loading="lazy" poster="images/magnit-sign-poster.webp" aria-label="«Магнит», анимация вывески">
-          <source src="videos/magnit-sign.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <figcaption class="work__cap">«Магнит», анимация вывески</figcaption>
-    </figure>
-    <figure class="work" style="grid-column: 9 / 13; --ar: 9 / 16">
-      <div class="work__media work__media--video">
-        <video controls playsinline preload="metadata" loading="lazy" poster="images/almond-drink-poster.webp" aria-label="Миндальный напиток">
-          <source src="videos/almond-drink.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <figcaption class="work__cap">Миндальный напиток</figcaption>
-    </figure>
+    <div class="work-row">
+      <figure class="work">
+        <div class="work__media work__media--video">
+          <video controls playsinline preload="metadata" loading="lazy" poster="images/magnit-sign-poster.webp" aria-label="«Магнит», анимация вывески">
+            <source src="videos/magnit-sign.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="work__cap">«Магнит», анимация вывески</figcaption>
+      </figure>
+      <figure class="work" style="--ar: 9 / 16">
+        <div class="work__media work__media--video">
+          <video controls playsinline preload="metadata" loading="lazy" poster="images/almond-drink-poster.webp" aria-label="Миндальный напиток">
+            <source src="videos/almond-drink.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="work__cap">Миндальный напиток</figcaption>
+      </figure>
+    </div>
 
-    <figure class="work" style="grid-column: 1 / 4; --ar: 240 / 427">
-      <div class="work__media work__media--video">
-        <video controls playsinline preload="metadata" loading="lazy" poster="images/animated-family-poster.webp" aria-label="Семейная анимация">
-          <source src="videos/animated-family.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <figcaption class="work__cap">Семейная анимация</figcaption>
-    </figure>
-    <figure class="work" style="grid-column: 6 / 13">
-      <div class="work__media work__media--video">
-        <video controls playsinline preload="metadata" loading="lazy" poster="images/reading-worlds-poster.webp" aria-label="Путешествие по мирам">
-          <source src="videos/reading-worlds.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <figcaption class="work__cap">Путешествие по мирам</figcaption>
-    </figure>
+    <div class="work-row">
+      <figure class="work" style="--ar: 240 / 427">
+        <div class="work__media work__media--video">
+          <video controls playsinline preload="metadata" loading="lazy" poster="images/animated-family-poster.webp" aria-label="Семейная анимация">
+            <source src="videos/animated-family.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="work__cap">Семейная анимация</figcaption>
+      </figure>
+      <figure class="work">
+        <div class="work__media work__media--video">
+          <video controls playsinline preload="metadata" loading="lazy" poster="images/reading-worlds-poster.webp" aria-label="Путешествие по мирам">
+            <source src="videos/reading-worlds.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="work__cap">Путешествие по мирам</figcaption>
+      </figure>
+    </div>
 
-    <figure class="work" style="grid-column: 1 / 8">
-      <div class="work__media work__media--video">
-        <video controls playsinline preload="metadata" loading="lazy" poster="images/kitchen-fashion-poster.webp" aria-label="Фэшн-сцена на кухне">
-          <source src="videos/kitchen-fashion.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <figcaption class="work__cap">Фэшн-сцена на кухне</figcaption>
-    </figure>
-    <figure class="work" style="grid-column: 9 / 13; --ar: 9 / 16">
-      <div class="work__media work__media--video">
-        <video controls playsinline preload="metadata" loading="lazy" poster="images/pastry-filling-poster.webp" aria-label="Выпечка с ягодной начинкой">
-          <source src="videos/pastry-filling.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <figcaption class="work__cap">Выпечка с ягодной начинкой</figcaption>
-    </figure>
+    <div class="work-row">
+      <figure class="work">
+        <div class="work__media work__media--video">
+          <video controls playsinline preload="metadata" loading="lazy" poster="images/kitchen-fashion-poster.webp" aria-label="Фэшн-сцена на кухне">
+            <source src="videos/kitchen-fashion.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="work__cap">Фэшн-сцена на кухне</figcaption>
+      </figure>
+      <figure class="work" style="--ar: 9 / 16">
+        <div class="work__media work__media--video">
+          <video controls playsinline preload="metadata" loading="lazy" poster="images/pastry-filling-poster.webp" aria-label="Выпечка с ягодной начинкой">
+            <source src="videos/pastry-filling.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="work__cap">Выпечка с ягодной начинкой</figcaption>
+      </figure>
+    </div>
 
-    <figure class="work" style="grid-column: 1 / 4; --ar: 9 / 16">
-      <div class="work__media work__media--video">
-        <video controls playsinline preload="metadata" loading="lazy" poster="images/city-monochrome-poster.webp" aria-label="Город в чёрно-белом">
-          <source src="videos/city-monochrome.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <figcaption class="work__cap">Город в чёрно-белом</figcaption>
-    </figure>
-    <figure class="work" style="grid-column: 6 / 13">
-      <div class="work__media work__media--video">
-        <video controls playsinline preload="metadata" loading="lazy" poster="images/studio-portrait-poster.webp" aria-label="Студийный мужской портрет">
-          <source src="videos/studio-portrait.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <figcaption class="work__cap">Студийный мужской портрет</figcaption>
-    </figure>
+    <div class="work-row">
+      <figure class="work" style="--ar: 9 / 16">
+        <div class="work__media work__media--video">
+          <video controls playsinline preload="metadata" loading="lazy" poster="images/city-monochrome-poster.webp" aria-label="Город в чёрно-белом">
+            <source src="videos/city-monochrome.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="work__cap">Город в чёрно-белом</figcaption>
+      </figure>
+      <figure class="work">
+        <div class="work__media work__media--video">
+          <video controls playsinline preload="metadata" loading="lazy" poster="images/studio-portrait-poster.webp" aria-label="Студийный мужской портрет">
+            <source src="videos/studio-portrait.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="work__cap">Студийный мужской портрет</figcaption>
+      </figure>
+    </div>
 
-    <figure class="work" style="grid-column: 1 / 5; --ar: 9 / 16">
-      <div class="work__media work__media--video">
-        <video controls playsinline preload="metadata" loading="lazy" poster="images/pastry-trio-poster.webp" aria-label="Выпечка с тремя начинками">
-          <source src="videos/pastry-trio.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <figcaption class="work__cap">Выпечка с тремя начинками</figcaption>
-    </figure>
-    <figure class="work" style="grid-column: 6 / 10; --ar: 40 / 71">
-      <div class="work__media work__media--video">
-        <video controls playsinline preload="metadata" loading="lazy" poster="images/animated-bread-poster.webp" aria-label="Анимация упаковки хлеба">
-          <source src="videos/animated-bread.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <figcaption class="work__cap">Анимация упаковки хлеба</figcaption>
-    </figure>
+    <div class="work-row work-row--portraits">
+      <figure class="work" style="--ar: 9 / 16">
+        <div class="work__media work__media--video">
+          <video controls playsinline preload="metadata" loading="lazy" poster="images/pastry-trio-poster.webp" aria-label="Выпечка с тремя начинками">
+            <source src="videos/pastry-trio.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="work__cap">Выпечка с тремя начинками</figcaption>
+      </figure>
+      <figure class="work" style="--ar: 40 / 71">
+        <div class="work__media work__media--video">
+          <video controls playsinline preload="metadata" loading="lazy" poster="images/animated-bread-poster.webp" aria-label="Анимация упаковки хлеба">
+            <source src="videos/animated-bread.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="work__cap">Анимация упаковки хлеба</figcaption>
+      </figure>
+    </div>
 
-    <figure class="work" style="grid-column: 2 / 6; --ar: 9 / 16">
-      <div class="work__media work__media--video">
-        <video controls playsinline preload="metadata" loading="lazy" poster="images/cookies-and-milk-poster.webp" aria-label="Печенье и молоко, анимация">
-          <source src="videos/cookies-and-milk.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <figcaption class="work__cap">Печенье и молоко, анимация</figcaption>
-    </figure>
-    <figure class="work" style="grid-column: 8 / 12; --ar: 9 / 16">
-      <div class="work__media work__media--video">
-        <video controls playsinline preload="metadata" loading="lazy" poster="images/animated-breakfast-poster.webp" aria-label="Анимация завтрака">
-          <source src="videos/animated-breakfast.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <figcaption class="work__cap">Анимация завтрака</figcaption>
-    </figure>
+    <div class="work-row work-row--portraits">
+      <figure class="work" style="--ar: 9 / 16">
+        <div class="work__media work__media--video">
+          <video controls playsinline preload="metadata" loading="lazy" poster="images/cookies-and-milk-poster.webp" aria-label="Печенье и молоко, анимация">
+            <source src="videos/cookies-and-milk.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="work__cap">Печенье и молоко, анимация</figcaption>
+      </figure>
+      <figure class="work" style="--ar: 9 / 16">
+        <div class="work__media work__media--video">
+          <video controls playsinline preload="metadata" loading="lazy" poster="images/animated-breakfast-poster.webp" aria-label="Анимация завтрака">
+            <source src="videos/animated-breakfast.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="work__cap">Анимация завтрака</figcaption>
+      </figure>
+    </div>
   </section>
 </main>
 
