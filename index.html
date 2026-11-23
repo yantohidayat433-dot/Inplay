@@ -40,36 +40,24 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .page { padding: 0 var(--pad); }
 
 /* Header */
-.top {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  column-gap: var(--gap);
-  padding-top: 6px;
-  min-height: 29px;
-}
+.top { padding: 6px 18px 0; }
 .logo {
-  grid-column: 1 / 4;
-  justify-self: center;
+  display: inline-block;
   font-weight: 600;
   font-size: 20px;
   line-height: 23px;
   letter-spacing: -0.02em;
 }
-.top__nav { display: flex; justify-content: space-between; }
-.top__nav a, .top__nav span { line-height: 23px; }
-.top__nav a { transition: color .3s; }
-.top__nav a:hover { color: var(--muted); }
 
 /* Intro */
 .intro {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   column-gap: var(--gap);
-  margin-top: 137px;
+  margin-top: 143px;
 }
+.intro__bio, .services { grid-column: 1 / 4; padding: 0 18px; }
 .intro__bio {
-  grid-column: 1 / 4;
-  padding: 0 18px;
   font-size: 36px;
   line-height: 1.125;
   letter-spacing: -0.03em;
@@ -81,9 +69,16 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .intro__link span { display: inline-block; transition: transform .3s var(--ease); }
 .intro__link:hover { color: var(--ink); }
 .intro__link:hover span { transform: translateX(6px); }
-.services { padding-top: 6px; }
-.services__item + .services__item { margin-top: 16px; }
-.services__item p { color: var(--muted); }
+.services {
+  margin-top: 32px;
+  color: var(--muted);
+  letter-spacing: -0.025em;
+  line-height: 1.22;
+}
+.services p { max-width: 380px; }
+.services b { font-weight: 400; color: var(--ink); }
+.services__item { transition: color .3s; }
+@media (hover: hover) { .services__item:hover { color: var(--ink); } }
 
 /* Works */
 .works {
@@ -134,22 +129,21 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
 /* Tablet */
 @media (max-width: 900px) {
-  .intro { grid-template-columns: 1fr; row-gap: 40px; margin-top: 96px; }
-  .intro__bio { grid-column: 1; padding: 0 6px; font-size: 30px; }
-  .services { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 12px; padding: 0 6px; }
-  .services__item + .services__item { margin-top: 0; }
+  .top { padding: 6px 6px 0; }
+  .intro { grid-template-columns: 1fr; margin-top: 96px; }
+  .intro__bio, .services { grid-column: 1; padding: 0 6px; }
+  .intro__bio { font-size: 30px; }
 }
 
 /* Phone */
 @media (max-width: 700px) {
   :root { --pad: 8px; }
-  .top { grid-template-columns: 1fr auto; padding-top: 8px; }
-  .logo { grid-column: 1; justify-self: start; font-size: 18px; }
-  .top__nav .top__anchors { display: none; }
-  .intro { margin-top: 72px; row-gap: 32px; }
-  .intro__bio { font-size: 25px; padding: 0; }
-  .services { grid-template-columns: 1fr; padding: 0; }
-  .services__item + .services__item { margin-top: 16px; }
+  .top { padding: 8px 0 0; }
+  .logo { font-size: 18px; }
+  .intro { margin-top: 72px; }
+  .intro__bio, .services { padding: 0; }
+  .intro__bio { font-size: 25px; }
+  .services { margin-top: 24px; }
   .works { grid-template-columns: 1fr; row-gap: 32px; margin-top: 56px; }
   .work { grid-column: 1 !important; }
   .work__cap { font-size: 15px; }
@@ -164,28 +158,13 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 <div class="page">
   <header class="top">
     <a class="logo" href="./">Никита Иванов</a>
-    <nav class="top__nav">
-      <span class="top__anchors"><a href="#works">работы,</a> <a href="#services">услуги</a></span>
-      <a href="https://t.me/">написать</a>
-    </nav>
   </header>
 
   <section class="intro">
     <h1 class="intro__bio">Никита Иванов, <span class="nw">AI-креатор</span>. Генерирую фото и&nbsp;видео для&nbsp;брендов: от&nbsp;рекламных визуалов и&nbsp;предметки без&nbsp;студии до&nbsp;роликов для&nbsp;соцсетей и&nbsp;анимации. Обучаю нейросеть на&nbsp;айдентике бренда, чтобы стиль, цвет и&nbsp;характер держались в&nbsp;каждом кадре. <a class="intro__link" href="https://t.me/">Написать в&nbsp;Telegram&nbsp;<span>→</span></a></h1>
 
-    <div class="services" id="services">
-      <div class="services__item">
-        <h2>Видео</h2>
-        <p>Ролики для&nbsp;соцсетей, продуктовые и&nbsp;анимационные, OLV, цифровая наружка и&nbsp;заставки для&nbsp;мероприятий.</p>
-      </div>
-      <div class="services__item">
-        <h2>Фото</h2>
-        <p>Рекламные визуалы, предметка для&nbsp;каталогов и&nbsp;маркетплейсов, фуд, нейрофотосессии, <span class="nw">AI-аватары</span>, маскоты, 3D и&nbsp;иллюстрации.</p>
-      </div>
-      <div class="services__item">
-        <h2>Поток</h2>
-        <p>Для&nbsp;регулярных задач собираю стайлгайд и&nbsp;референс-библиотеку, чтобы SMM, каталоги и&nbsp;сезонные кампании не&nbsp;расползались по&nbsp;стилю.</p>
-      </div>
+    <div class="services">
+      <p><span class="services__item">Могу помочь с&nbsp;<b>видео</b>: ролики для&nbsp;соцсетей, продуктовые и&nbsp;анимационные, OLV, цифровая наружка и&nbsp;заставки для&nbsp;мероприятий.</span> <span class="services__item">С&nbsp;<b>фото</b>: рекламные визуалы, предметка для&nbsp;каталогов и&nbsp;маркетплейсов, фуд, нейрофотосессии, <span class="nw">AI-аватары</span>, маскоты, 3D и&nbsp;иллюстрации.</span> <span class="services__item">И&nbsp;с&nbsp;регулярным <b>потоком</b>: соберу стайлгайд и&nbsp;референсы, чтобы SMM, каталоги и&nbsp;сезонные кампании не&nbsp;расползались по&nbsp;стилю.</span></p>
     </div>
   </section>
 
