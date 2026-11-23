@@ -256,7 +256,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
       </figure>
       <figure class="work" style="--ar: 9 / 16">
         <div class="work__media work__media--video">
-          <video controls playsinline preload="metadata" poster="images/stadium-sports-poster.webp" aria-label="Спортивная реклама, динамичный монтаж">
+          <video controls playsinline preload="none" poster="images/stadium-sports-poster.webp" aria-label="Спортивная реклама, динамичный монтаж">
             <source src="videos/stadium-sports.mp4" type='video/mp4; codecs="avc1.64001F, mp4a.40.2"' />
             <source src="videos/stadium-sports.webm" type='video/webm; codecs="vp9, opus"' />
           </video>
@@ -268,7 +268,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
     <div class="work-row">
       <figure class="work">
         <div class="work__media work__media--video">
-          <video controls playsinline preload="metadata" poster="images/magnit-sign-poster.webp" aria-label="Имиджевый ролик, моушн-дизайн">
+          <video controls playsinline preload="none" poster="images/magnit-sign-poster.webp" aria-label="Имиджевый ролик, моушн-дизайн">
             <source src="videos/magnit-sign.mp4" type='video/mp4; codecs="avc1.64001F, mp4a.40.2"' />
             <source src="videos/magnit-sign.webm" type='video/webm; codecs="vp9, opus"' />
           </video>
@@ -590,12 +590,52 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 <script>
 (() => {
   const mobilePlayback = window.matchMedia('(max-width: 700px), (hover: none) and (pointer: coarse)');
+  const nearbyPlayers = new Set();
   let activePlayer;
+  let preparingPlayer;
+
+  function stopPreparing(selectedPlayer) {
+    const player = preparingPlayer;
+    preparingPlayer = undefined;
+    if (!player) return;
+    player.preload = 'none';
+    if (player !== selectedPlayer && player.paused && player.networkState === HTMLMediaElement.NETWORK_LOADING) {
+      player.load();
+    }
+  }
+
+  function prepareNearby() {
+    if (activePlayer) return;
+    const [player] = [...nearbyPlayers].sort((left, right) =>
+      left.getBoundingClientRect().top - right.getBoundingClientRect().top
+    );
+    if (player === preparingPlayer) return;
+    stopPreparing();
+    if (!player || player.readyState > HTMLMediaElement.HAVE_NOTHING || player.error) return;
+    preparingPlayer = player;
+    player.preload = 'metadata';
+    player.removeAttribute('loading');
+  }
+
+  const nearbyObserver = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
+    for (const { target, isIntersecting } of entries) {
+      if (isIntersecting) nearbyPlayers.add(target);
+      else nearbyPlayers.delete(target);
+    }
+    prepareNearby();
+  }, { rootMargin: '0px 0px 220px 0px' }) : null;
 
   function activate(player) {
     if (activePlayer && activePlayer !== player) activePlayer.pause();
     activePlayer = player;
+    stopPreparing(player);
     player.removeAttribute('loading');
+  }
+
+  function finishPlayback(player) {
+    if (activePlayer !== player) return;
+    activePlayer = undefined;
+    prepareNearby();
   }
 
   for (const player of document.querySelectorAll('.work__media video')) {
@@ -613,11 +653,15 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
     }
 
     showCoverPlay(true);
+    nearbyObserver?.observe(player);
     mobilePlayback.addEventListener('change', () => showCoverPlay(!button.hidden));
     button.addEventListener('click', () => {
       activate(player);
       showCoverPlay(false);
-      player.play().catch(() => showCoverPlay(true));
+      player.play().catch(() => {
+        showCoverPlay(true);
+        finishPlayback(player);
+      });
     });
     player.addEventListener('play', () => {
       if (player.paused) return;
@@ -625,11 +669,14 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
       showCoverPlay(false);
     });
     player.addEventListener('pause', () => {
-      if (activePlayer === player) activePlayer = undefined;
+      finishPlayback(player);
       if (player.currentTime === 0) showCoverPlay(true);
     });
     player.addEventListener('ended', () => showCoverPlay(true));
-    player.addEventListener('error', () => showCoverPlay(true));
+    player.addEventListener('error', () => {
+      showCoverPlay(true);
+      finishPlayback(player);
+    });
   }
 })();
 </script>
