@@ -93,7 +93,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   transform: scale(1.001);
   transition: transform .9s var(--ease), filter .9s var(--ease);
 }
-.work__media--video { aspect-ratio: 16 / 9; }
+.work__media--video { aspect-ratio: var(--ar, 16 / 9); }
 .work__media video {
   display: block;
   width: 100%;
@@ -187,14 +187,22 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
       </div>
       <figcaption class="work__cap">Фэшн-ролик</figcaption>
     </figure>
-    <figure class="work" style="grid-column: 10 / 13; --ar: 4 / 5">
-      <div class="work__media"><picture><source media="(max-width: 700px)" srcset="images/placeholder-m.webp" width="1080" height="1350" /><img src="images/placeholder-960.webp" alt="" width="960" height="768" /></picture></div>
-      <figcaption class="work__cap">Название бренда, <span class="nw">AI-аватар</span> <span class="work__soon">скоро</span></figcaption>
+    <figure class="work" style="grid-column: 10 / 13; --ar: 3 / 4">
+      <div class="work__media work__media--video">
+        <video controls playsinline preload="none" loading="lazy" poster="images/fashion-backstage-poster.webp" aria-label="Фэшн-ролик на съёмочной площадке">
+          <source src="videos/fashion-backstage.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <figcaption class="work__cap">Фэшн-ролик на съёмочной площадке</figcaption>
     </figure>
 
-    <figure class="work" style="grid-column: 1 / 4; --ar: 4 / 5">
-      <div class="work__media"><picture><source media="(max-width: 700px)" srcset="images/placeholder-m.webp" width="1080" height="1350" /><img src="images/placeholder-960.webp" alt="" width="960" height="768" loading="lazy" /></picture></div>
-      <figcaption class="work__cap">Название бренда, предметная съёмка <span class="work__soon">скоро</span></figcaption>
+    <figure class="work" style="grid-column: 1 / 4; --ar: 9 / 16">
+      <div class="work__media work__media--video">
+        <video controls playsinline preload="none" loading="lazy" poster="images/skincare-outdoors-poster.webp" aria-label="Бьюти-съёмка на солнце">
+          <source src="videos/skincare-outdoors.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <figcaption class="work__cap">Бьюти-съёмка на солнце</figcaption>
     </figure>
     <figure class="work" style="grid-column: 6 / 13">
       <div class="work__media work__media--video">
@@ -205,31 +213,106 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
       <figcaption class="work__cap">Бьюти-ролик</figcaption>
     </figure>
 
-    <figure class="work" style="grid-column: 1 / 8; --ar: 3 / 2">
-      <div class="work__media"><picture><source media="(max-width: 700px)" srcset="images/placeholder-m.webp" width="1080" height="1350" /><img src="images/placeholder.webp" srcset="images/placeholder-960.webp 960w, images/placeholder.webp 1920w" sizes="58vw" alt="" width="1920" height="1536" loading="lazy" /></picture></div>
-      <figcaption class="work__cap">Название бренда, сезонная кампания <span class="work__soon">скоро</span></figcaption>
+    <figure class="work" style="grid-column: 1 / 8">
+      <div class="work__media work__media--video">
+        <video controls playsinline preload="none" loading="lazy" poster="images/automotive-poster.webp" aria-label="Автомобильный ролик">
+          <source src="videos/automotive.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <figcaption class="work__cap">Автомобильный ролик</figcaption>
     </figure>
-    <figure class="work" style="grid-column: 9 / 13; --ar: 4 / 5">
-      <div class="work__media"><picture><source media="(max-width: 700px)" srcset="images/placeholder-m.webp" width="1080" height="1350" /><img src="images/placeholder-960.webp" alt="" width="960" height="768" loading="lazy" /></picture></div>
-      <figcaption class="work__cap">Название бренда, нейрофотосессия <span class="work__soon">скоро</span></figcaption>
+    <figure class="work" style="grid-column: 9 / 13; --ar: 3 / 4">
+      <div class="work__media work__media--video">
+        <video controls playsinline preload="none" loading="lazy" poster="images/desert-fashion-poster.webp" aria-label="Фэшн-ролик в пустыне">
+          <source src="videos/desert-fashion.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <figcaption class="work__cap">Фэшн-ролик в пустыне</figcaption>
     </figure>
 
-    <figure class="work" style="grid-column: 1 / 6; --ar: 4 / 5">
-      <div class="work__media"><picture><source media="(max-width: 700px)" srcset="images/placeholder-m.webp" width="1080" height="1350" /><img src="images/placeholder-960.webp" alt="" width="960" height="768" loading="lazy" /></picture></div>
-      <figcaption class="work__cap">Название бренда, <span class="nw">фуд-съёмка</span> <span class="work__soon">скоро</span></figcaption>
+    <figure class="work" style="grid-column: 1 / 6; --ar: 3 / 4">
+      <div class="work__media work__media--video">
+        <video controls playsinline preload="none" loading="lazy" poster="images/jewelry-portrait-poster.webp" aria-label="Ювелирный портрет">
+          <source src="videos/jewelry-portrait.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <figcaption class="work__cap">Ювелирный портрет</figcaption>
     </figure>
-    <figure class="work" style="grid-column: 7 / 13; --ar: 3 / 2">
-      <div class="work__media"><picture><source media="(max-width: 700px)" srcset="images/placeholder-m.webp" width="1080" height="1350" /><img src="images/placeholder.webp" srcset="images/placeholder-960.webp 960w, images/placeholder.webp 1920w" sizes="50vw" alt="" width="1920" height="1536" loading="lazy" /></picture></div>
-      <figcaption class="work__cap">Название бренда, OLV <span class="work__soon">скоро</span></figcaption>
+    <figure class="work" style="grid-column: 7 / 13">
+      <div class="work__media work__media--video">
+        <video controls playsinline preload="none" loading="lazy" poster="images/coastal-fashion-poster.webp" aria-label="Фэшн-ролик на побережье">
+          <source src="videos/coastal-fashion.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <figcaption class="work__cap">Фэшн-ролик на побережье</figcaption>
     </figure>
 
-    <figure class="work" style="grid-column: 1 / 6; --ar: 4 / 5">
-      <div class="work__media"><picture><source media="(max-width: 700px)" srcset="images/placeholder-m.webp" width="1080" height="1350" /><img src="images/placeholder-960.webp" alt="" width="960" height="768" loading="lazy" /></picture></div>
-      <figcaption class="work__cap">Название бренда, маскот <span class="work__soon">скоро</span></figcaption>
+    <figure class="work" style="grid-column: 1 / 6; --ar: 3 / 4">
+      <div class="work__media work__media--video">
+        <video controls playsinline preload="none" loading="lazy" poster="images/jewelry-bracelet-poster.webp" aria-label="Браслет крупным планом">
+          <source src="videos/jewelry-bracelet.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <figcaption class="work__cap">Браслет крупным планом</figcaption>
     </figure>
-    <figure class="work" style="grid-column: 6 / 11; --ar: 4 / 5">
-      <div class="work__media"><picture><source media="(max-width: 700px)" srcset="images/placeholder-m.webp" width="1080" height="1350" /><img src="images/placeholder-960.webp" alt="" width="960" height="768" loading="lazy" /></picture></div>
-      <figcaption class="work__cap">Название бренда, <span class="nw">3D-изображения</span> <span class="work__soon">скоро</span></figcaption>
+    <figure class="work" style="grid-column: 6 / 11; --ar: 3 / 4">
+      <div class="work__media work__media--video">
+        <video controls playsinline preload="none" loading="lazy" poster="images/jewelry-ring-poster.webp" aria-label="Кольцо крупным планом">
+          <source src="videos/jewelry-ring.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <figcaption class="work__cap">Кольцо крупным планом</figcaption>
+    </figure>
+
+    <figure class="work" style="grid-column: 1 / 8">
+      <div class="work__media work__media--video">
+        <video controls playsinline preload="none" loading="lazy" poster="images/serum-demo-poster.webp" aria-label="Демонстрация сыворотки">
+          <source src="videos/serum-demo.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <figcaption class="work__cap">Демонстрация сыворотки</figcaption>
+    </figure>
+    <figure class="work" style="grid-column: 9 / 13; --ar: 9 / 16">
+      <div class="work__media work__media--video">
+        <video controls playsinline preload="none" loading="lazy" poster="images/ugc-product-poster.webp" aria-label="UGC, демонстрация продукта">
+          <source src="videos/ugc-product.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <figcaption class="work__cap">UGC, демонстрация продукта</figcaption>
+    </figure>
+
+    <figure class="work" style="grid-column: 1 / 4; --ar: 3 / 4">
+      <div class="work__media work__media--video">
+        <video controls playsinline preload="none" loading="lazy" poster="images/jewelry-sunlight-poster.webp" aria-label="Украшения в солнечном свете">
+          <source src="videos/jewelry-sunlight.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <figcaption class="work__cap">Украшения в солнечном свете</figcaption>
+    </figure>
+    <figure class="work" style="grid-column: 6 / 13">
+      <div class="work__media work__media--video">
+        <video controls playsinline preload="none" loading="lazy" poster="images/poolside-products-poster.webp" aria-label="Косметика у бассейна">
+          <source src="videos/poolside-products.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <figcaption class="work__cap">Косметика у бассейна</figcaption>
+    </figure>
+
+    <figure class="work" style="grid-column: 1 / 7">
+      <div class="work__media work__media--video">
+        <video controls playsinline preload="none" loading="lazy" poster="images/cheetos-concept-poster.webp" aria-label="Cheetos, анимационный концепт">
+          <source src="videos/cheetos-concept.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <figcaption class="work__cap">Cheetos, анимационный концепт</figcaption>
+    </figure>
+    <figure class="work" style="grid-column: 8 / 13">
+      <div class="work__media work__media--video">
+        <video controls playsinline preload="none" loading="lazy" poster="images/raspberry-drink-poster.webp" aria-label="Продуктовый ролик с малиной">
+          <source src="videos/raspberry-drink.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <figcaption class="work__cap">Продуктовый ролик с малиной</figcaption>
     </figure>
   </section>
 </main>
