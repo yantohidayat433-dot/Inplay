@@ -110,6 +110,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   flex: 0 1 calc(clamp(280px, 39vw, 560px) * (var(--ar, 16 / 9)));
 }
 .work__media {
+  position: relative;
   overflow: hidden;
   border-radius: 4px;
   background: var(--media-bg);
@@ -125,6 +126,38 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   height: 100%;
   object-fit: contain;
   background: var(--ink);
+}
+.work__play {
+  position: absolute;
+  inset: 0 0 64px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.work__play[hidden] { display: none; }
+.work__play::before,
+.work__play::after {
+  content: '';
+  grid-area: 1 / 1;
+  margin-top: 32px;
+}
+.work__play::before {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgb(0 0 0 / .64);
+}
+.work__play::after {
+  border-block: 8px solid transparent;
+  border-left: 12px solid var(--bg);
+  margin-left: 3px;
+}
+.work__play:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -4px;
 }
 .work__cap {
   margin-top: 8px;
@@ -211,7 +244,8 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
       <figure class="work">
         <div class="work__media work__media--video">
           <video controls playsinline preload="none" poster="images/fashion-poster.webp" aria-label="Фэшн-ролик">
-            <source src="videos/fashion.mp4" type="video/mp4" />
+            <source src="videos/fashion.mp4" type='video/mp4; codecs="avc1.640032, mp4a.40.2"' />
+            <source src="videos/fashion.webm" type='video/webm; codecs="vp9, opus"' />
           </video>
         </div>
         <figcaption class="work__cap">Фэшн-ролик</figcaption>
@@ -219,7 +253,8 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
       <figure class="work" style="--ar: 3 / 4">
         <div class="work__media work__media--video">
           <video controls playsinline preload="metadata" poster="images/fashion-backstage-poster.webp" aria-label="Фэшн-ролик на съёмочной площадке">
-            <source src="videos/fashion-backstage.mp4" type="video/mp4" />
+            <source src="videos/fashion-backstage.mp4" type='video/mp4; codecs="avc1.640020, mp4a.40.2"' />
+            <source src="videos/fashion-backstage.webm" type='video/webm; codecs="vp9, opus"' />
           </video>
         </div>
         <figcaption class="work__cap">Фэшн-ролик на съёмочной площадке</figcaption>
@@ -230,7 +265,8 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
       <figure class="work" style="--ar: 9 / 16">
         <div class="work__media work__media--video">
           <video controls playsinline preload="metadata" poster="images/skincare-outdoors-poster.webp" aria-label="Бьюти-съёмка на солнце">
-            <source src="videos/skincare-outdoors.mp4" type="video/mp4" />
+            <source src="videos/skincare-outdoors.mp4" type='video/mp4; codecs="avc1.640020, mp4a.40.2"' />
+            <source src="videos/skincare-outdoors.webm" type='video/webm; codecs="vp9, opus"' />
           </video>
         </div>
         <figcaption class="work__cap">Бьюти-съёмка на солнце</figcaption>
@@ -238,7 +274,8 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
       <figure class="work">
         <div class="work__media work__media--video">
           <video controls playsinline preload="none" poster="images/beauty-poster.webp" aria-label="Бьюти-ролик">
-            <source src="videos/beauty.mp4" type="video/mp4" />
+            <source src="videos/beauty.mp4" type='video/mp4; codecs="avc1.64001F, mp4a.40.2"' />
+            <source src="videos/beauty.webm" type='video/webm; codecs="vp9, opus"' />
           </video>
         </div>
         <figcaption class="work__cap">Бьюти-ролик</figcaption>
@@ -249,7 +286,8 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
       <figure class="work">
         <div class="work__media work__media--video">
           <video controls playsinline preload="none" loading="lazy" poster="images/automotive-poster.webp" aria-label="Автомобильный ролик">
-            <source src="videos/automotive.mp4" type="video/mp4" />
+            <source src="videos/automotive.mp4" type='video/mp4; codecs="avc1.640028, mp4a.40.2"' />
+            <source src="videos/automotive.webm" type='video/webm; codecs="vp9, opus"' />
           </video>
         </div>
         <figcaption class="work__cap">Автомобильный ролик</figcaption>
@@ -257,7 +295,8 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
       <figure class="work" style="--ar: 3 / 4">
         <div class="work__media work__media--video">
           <video controls playsinline preload="none" loading="lazy" poster="images/desert-fashion-poster.webp" aria-label="Фэшн-ролик в пустыне">
-            <source src="videos/desert-fashion.mp4" type="video/mp4" />
+            <source src="videos/desert-fashion.mp4" type='video/mp4; codecs="avc1.640020, mp4a.40.2"' />
+            <source src="videos/desert-fashion.webm" type='video/webm; codecs="vp9, opus"' />
           </video>
         </div>
         <figcaption class="work__cap">Фэшн-ролик в пустыне</figcaption>
@@ -268,7 +307,8 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
       <figure class="work" style="--ar: 3 / 4">
         <div class="work__media work__media--video">
           <video controls playsinline preload="none" loading="lazy" poster="images/jewelry-portrait-poster.webp" aria-label="Ювелирный портрет">
-            <source src="videos/jewelry-portrait.mp4" type="video/mp4" />
+            <source src="videos/jewelry-portrait.mp4" type='video/mp4; codecs="avc1.640020, mp4a.40.2"' />
+            <source src="videos/jewelry-portrait.webm" type='video/webm; codecs="vp9, opus"' />
           </video>
         </div>
         <figcaption class="work__cap">Ювелирный портрет</figcaption>
@@ -276,7 +316,8 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
       <figure class="work">
         <div class="work__media work__media--video">
           <video controls playsinline preload="none" loading="lazy" poster="images/coastal-fashion-poster.webp" aria-label="Фэшн-ролик на побережье">
-            <source src="videos/coastal-fashion.mp4" type="video/mp4" />
+            <source src="videos/coastal-fashion.mp4" type='video/mp4; codecs="avc1.640028, mp4a.40.2"' />
+            <source src="videos/coastal-fashion.webm" type='video/webm; codecs="vp9, opus"' />
           </video>
         </div>
         <figcaption class="work__cap">Фэшн-ролик на побережье</figcaption>
@@ -287,7 +328,8 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
       <figure class="work" style="--ar: 3 / 4">
         <div class="work__media work__media--video">
           <video controls playsinline preload="none" loading="lazy" poster="images/jewelry-bracelet-poster.webp" aria-label="Браслет крупным планом">
-            <source src="videos/jewelry-bracelet.mp4" type="video/mp4" />
+            <source src="videos/jewelry-bracelet.mp4" type='video/mp4; codecs="avc1.640020, mp4a.40.2"' />
+            <source src="videos/jewelry-bracelet.webm" type='video/webm; codecs="vp9, opus"' />
           </video>
         </div>
         <figcaption class="work__cap">Браслет крупным планом</figcaption>
@@ -295,7 +337,8 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
       <figure class="work" style="--ar: 3 / 4">
         <div class="work__media work__media--video">
           <video controls playsinline preload="none" loading="lazy" poster="images/jewelry-ring-poster.webp" aria-label="Кольцо крупным планом">
-            <source src="videos/jewelry-ring.mp4" type="video/mp4" />
+            <source src="videos/jewelry-ring.mp4" type='video/mp4; codecs="avc1.640020, mp4a.40.2"' />
+            <source src="videos/jewelry-ring.webm" type='video/webm; codecs="vp9, opus"' />
           </video>
         </div>
         <figcaption class="work__cap">Кольцо крупным планом</figcaption>
@@ -306,7 +349,8 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
       <figure class="work">
         <div class="work__media work__media--video">
           <video controls playsinline preload="none" loading="lazy" poster="images/serum-demo-poster.webp" aria-label="Демонстрация сыворотки">
-            <source src="videos/serum-demo.mp4" type="video/mp4" />
+            <source src="videos/serum-demo.mp4" type='video/mp4; codecs="avc1.640028, mp4a.40.2"' />
+            <source src="videos/serum-demo.webm" type='video/webm; codecs="vp9, opus"' />
           </video>
         </div>
         <figcaption class="work__cap">Демонстрация сыворотки</figcaption>
@@ -314,7 +358,8 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
       <figure class="work" style="--ar: 9 / 16">
         <div class="work__media work__media--video">
           <video controls playsinline preload="none" loading="lazy" poster="images/ugc-product-poster.webp" aria-label="UGC, демонстрация продукта">
-            <source src="videos/ugc-product.mp4" type="video/mp4" />
+            <source src="videos/ugc-product.mp4" type='video/mp4; codecs="avc1.640020, mp4a.40.2"' />
+            <source src="videos/ugc-product.webm" type='video/webm; codecs="vp9, opus"' />
           </video>
         </div>
         <figcaption class="work__cap">UGC, демонстрация продукта</figcaption>
@@ -325,7 +370,8 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
       <figure class="work" style="--ar: 3 / 4">
         <div class="work__media work__media--video">
           <video controls playsinline preload="none" loading="lazy" poster="images/jewelry-sunlight-poster.webp" aria-label="Украшения в солнечном свете">
-            <source src="videos/jewelry-sunlight.mp4" type="video/mp4" />
+            <source src="videos/jewelry-sunlight.mp4" type='video/mp4; codecs="avc1.640020, mp4a.40.2"' />
+            <source src="videos/jewelry-sunlight.webm" type='video/webm; codecs="vp9, opus"' />
           </video>
         </div>
         <figcaption class="work__cap">Украшения в солнечном свете</figcaption>
@@ -333,7 +379,8 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
       <figure class="work">
         <div class="work__media work__media--video">
           <video controls playsinline preload="none" loading="lazy" poster="images/poolside-products-poster.webp" aria-label="Косметика у бассейна">
-            <source src="videos/poolside-products.mp4" type="video/mp4" />
+            <source src="videos/poolside-products.mp4" type='video/mp4; codecs="avc1.64001F, mp4a.40.2"' />
+            <source src="videos/poolside-products.webm" type='video/webm; codecs="vp9, opus"' />
           </video>
         </div>
         <figcaption class="work__cap">Косметика у бассейна</figcaption>
@@ -344,7 +391,8 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
       <figure class="work">
         <div class="work__media work__media--video">
           <video controls playsinline preload="none" loading="lazy" poster="images/cheetos-concept-poster.webp" aria-label="Cheetos, анимационный концепт">
-            <source src="videos/cheetos-concept.mp4" type="video/mp4" />
+            <source src="videos/cheetos-concept.mp4" type='video/mp4; codecs="avc1.640028, mp4a.40.2"' />
+            <source src="videos/cheetos-concept.webm" type='video/webm; codecs="vp9, opus"' />
           </video>
         </div>
         <figcaption class="work__cap">Cheetos, анимационный концепт</figcaption>
@@ -352,7 +400,8 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
       <figure class="work">
         <div class="work__media work__media--video">
           <video controls playsinline preload="none" loading="lazy" poster="images/raspberry-drink-poster.webp" aria-label="Продуктовый ролик с малиной">
-            <source src="videos/raspberry-drink.mp4" type="video/mp4" />
+            <source src="videos/raspberry-drink.mp4" type='video/mp4; codecs="avc1.64001F, mp4a.40.2"' />
+            <source src="videos/raspberry-drink.webm" type='video/webm; codecs="vp9, opus"' />
           </video>
         </div>
         <figcaption class="work__cap">Продуктовый ролик с малиной</figcaption>
@@ -362,16 +411,18 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
     <div class="work-row">
       <figure class="work">
         <div class="work__media work__media--video">
-          <video controls playsinline preload="metadata" loading="lazy" poster="images/seaside-white-dress-poster.webp" aria-label="Фэшн-ролик у моря">
-            <source src="videos/seaside-white-dress.mp4" type="video/mp4" />
+          <video controls playsinline preload="none" loading="lazy" poster="images/seaside-white-dress-poster.webp" aria-label="Фэшн-ролик у моря">
+            <source src="videos/seaside-white-dress.mp4" type='video/mp4; codecs="avc1.64001F, mp4a.40.2"' />
+            <source src="videos/seaside-white-dress.webm" type='video/webm; codecs="vp9, opus"' />
           </video>
         </div>
         <figcaption class="work__cap">Фэшн-ролик у моря</figcaption>
       </figure>
       <figure class="work" style="--ar: 9 / 16">
         <div class="work__media work__media--video">
-          <video controls playsinline preload="metadata" loading="lazy" poster="images/stadium-sports-poster.webp" aria-label="Спортивный ролик на стадионе">
-            <source src="videos/stadium-sports.mp4" type="video/mp4" />
+          <video controls playsinline preload="none" loading="lazy" poster="images/stadium-sports-poster.webp" aria-label="Спортивный ролик на стадионе">
+            <source src="videos/stadium-sports.mp4" type='video/mp4; codecs="avc1.64001F, mp4a.40.2"' />
+            <source src="videos/stadium-sports.webm" type='video/webm; codecs="vp9, opus"' />
           </video>
         </div>
         <figcaption class="work__cap">Спортивный ролик на стадионе</figcaption>
@@ -381,16 +432,18 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
     <div class="work-row">
       <figure class="work" style="--ar: 9 / 16">
         <div class="work__media work__media--video">
-          <video controls playsinline preload="metadata" loading="lazy" poster="images/coastal-drive-poster.webp" aria-label="Автомобиль на прибрежной дороге">
-            <source src="videos/coastal-drive.mp4" type="video/mp4" />
+          <video controls playsinline preload="none" loading="lazy" poster="images/coastal-drive-poster.webp" aria-label="Автомобиль на прибрежной дороге">
+            <source src="videos/coastal-drive.mp4" type='video/mp4; codecs="avc1.640020, mp4a.40.2"' />
+            <source src="videos/coastal-drive.webm" type='video/webm; codecs="vp9, opus"' />
           </video>
         </div>
         <figcaption class="work__cap">Автомобиль на прибрежной дороге</figcaption>
       </figure>
       <figure class="work" style="--ar: 305 / 193">
         <div class="work__media work__media--video">
-          <video controls playsinline preload="metadata" loading="lazy" poster="images/car-in-motion-poster.webp" aria-label="Автомобиль в движении">
-            <source src="videos/car-in-motion.mp4" type="video/mp4" />
+          <video controls playsinline preload="none" loading="lazy" poster="images/car-in-motion-poster.webp" aria-label="Автомобиль в движении">
+            <source src="videos/car-in-motion.mp4" type='video/mp4; codecs="avc1.640020, mp4a.40.2"' />
+            <source src="videos/car-in-motion.webm" type='video/webm; codecs="vp9, opus"' />
           </video>
         </div>
         <figcaption class="work__cap">Автомобиль в движении</figcaption>
@@ -400,16 +453,18 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
     <div class="work-row">
       <figure class="work">
         <div class="work__media work__media--video">
-          <video controls playsinline preload="metadata" loading="lazy" poster="images/magnit-sign-poster.webp" aria-label="«Магнит», анимация вывески">
-            <source src="videos/magnit-sign.mp4" type="video/mp4" />
+          <video controls playsinline preload="none" loading="lazy" poster="images/magnit-sign-poster.webp" aria-label="«Магнит», анимация вывески">
+            <source src="videos/magnit-sign.mp4" type='video/mp4; codecs="avc1.64001F, mp4a.40.2"' />
+            <source src="videos/magnit-sign.webm" type='video/webm; codecs="vp9, opus"' />
           </video>
         </div>
         <figcaption class="work__cap">«Магнит», анимация вывески</figcaption>
       </figure>
       <figure class="work" style="--ar: 9 / 16">
         <div class="work__media work__media--video">
-          <video controls playsinline preload="metadata" loading="lazy" poster="images/almond-drink-poster.webp" aria-label="Миндальный напиток">
-            <source src="videos/almond-drink.mp4" type="video/mp4" />
+          <video controls playsinline preload="none" loading="lazy" poster="images/almond-drink-poster.webp" aria-label="Миндальный напиток">
+            <source src="videos/almond-drink.mp4" type='video/mp4; codecs="avc1.640020, mp4a.40.2"' />
+            <source src="videos/almond-drink.webm" type='video/webm; codecs="vp9, opus"' />
           </video>
         </div>
         <figcaption class="work__cap">Миндальный напиток</figcaption>
@@ -419,16 +474,18 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
     <div class="work-row">
       <figure class="work" style="--ar: 240 / 427">
         <div class="work__media work__media--video">
-          <video controls playsinline preload="metadata" loading="lazy" poster="images/animated-family-poster.webp" aria-label="Семейная анимация">
-            <source src="videos/animated-family.mp4" type="video/mp4" />
+          <video controls playsinline preload="none" loading="lazy" poster="images/animated-family-poster.webp" aria-label="Семейная анимация">
+            <source src="videos/animated-family.mp4" type='video/mp4; codecs="avc1.64001E, mp4a.40.2"' />
+            <source src="videos/animated-family.webm" type='video/webm; codecs="vp9, opus"' />
           </video>
         </div>
         <figcaption class="work__cap">Семейная анимация</figcaption>
       </figure>
       <figure class="work">
         <div class="work__media work__media--video">
-          <video controls playsinline preload="metadata" loading="lazy" poster="images/reading-worlds-poster.webp" aria-label="Путешествие по мирам">
-            <source src="videos/reading-worlds.mp4" type="video/mp4" />
+          <video controls playsinline preload="none" loading="lazy" poster="images/reading-worlds-poster.webp" aria-label="Путешествие по мирам">
+            <source src="videos/reading-worlds.mp4" type='video/mp4; codecs="avc1.640028, mp4a.40.2"' />
+            <source src="videos/reading-worlds.webm" type='video/webm; codecs="vp9, opus"' />
           </video>
         </div>
         <figcaption class="work__cap">Путешествие по мирам</figcaption>
@@ -438,16 +495,18 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
     <div class="work-row work-row--portraits">
       <figure class="work" style="--ar: 9 / 16">
         <div class="work__media work__media--video">
-          <video controls playsinline preload="metadata" loading="lazy" poster="images/pastry-trio-poster.webp" aria-label="Выпечка с тремя начинками">
-            <source src="videos/pastry-trio.mp4" type="video/mp4" />
+          <video controls playsinline preload="none" loading="lazy" poster="images/pastry-trio-poster.webp" aria-label="Выпечка с тремя начинками">
+            <source src="videos/pastry-trio.mp4" type='video/mp4; codecs="avc1.64001F, mp4a.40.2"' />
+            <source src="videos/pastry-trio.webm" type='video/webm; codecs="vp9, opus"' />
           </video>
         </div>
         <figcaption class="work__cap">Выпечка с тремя начинками</figcaption>
       </figure>
       <figure class="work" style="--ar: 40 / 71">
         <div class="work__media work__media--video">
-          <video controls playsinline preload="metadata" loading="lazy" poster="images/animated-bread-poster.webp" aria-label="Анимация упаковки хлеба">
-            <source src="videos/animated-bread.mp4" type="video/mp4" />
+          <video controls playsinline preload="none" loading="lazy" poster="images/animated-bread-poster.webp" aria-label="Анимация упаковки хлеба">
+            <source src="videos/animated-bread.mp4" type='video/mp4; codecs="avc1.64001F, mp4a.40.2"' />
+            <source src="videos/animated-bread.webm" type='video/webm; codecs="vp9, opus"' />
           </video>
         </div>
         <figcaption class="work__cap">Анимация упаковки хлеба</figcaption>
@@ -457,16 +516,18 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
     <div class="work-row">
       <figure class="work">
         <div class="work__media work__media--video">
-          <video controls playsinline preload="metadata" loading="lazy" poster="images/kitchen-fashion-poster.webp" aria-label="Фэшн-сцена на кухне">
-            <source src="videos/kitchen-fashion.mp4" type="video/mp4" />
+          <video controls playsinline preload="none" loading="lazy" poster="images/kitchen-fashion-poster.webp" aria-label="Фэшн-сцена на кухне">
+            <source src="videos/kitchen-fashion.mp4" type='video/mp4; codecs="avc1.640028, mp4a.40.2"' />
+            <source src="videos/kitchen-fashion.webm" type='video/webm; codecs="vp9, opus"' />
           </video>
         </div>
         <figcaption class="work__cap">Фэшн-сцена на кухне</figcaption>
       </figure>
       <figure class="work" style="--ar: 9 / 16">
         <div class="work__media work__media--video">
-          <video controls playsinline preload="metadata" loading="lazy" poster="images/pastry-filling-poster.webp" aria-label="Выпечка с ягодной начинкой">
-            <source src="videos/pastry-filling.mp4" type="video/mp4" />
+          <video controls playsinline preload="none" loading="lazy" poster="images/pastry-filling-poster.webp" aria-label="Выпечка с ягодной начинкой">
+            <source src="videos/pastry-filling.mp4" type='video/mp4; codecs="avc1.64001F, mp4a.40.2"' />
+            <source src="videos/pastry-filling.webm" type='video/webm; codecs="vp9, opus"' />
           </video>
         </div>
         <figcaption class="work__cap">Выпечка с ягодной начинкой</figcaption>
@@ -476,16 +537,18 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
     <div class="work-row work-row--portraits">
       <figure class="work" style="--ar: 9 / 16">
         <div class="work__media work__media--video">
-          <video controls playsinline preload="metadata" loading="lazy" poster="images/cookies-and-milk-poster.webp" aria-label="Печенье и молоко, анимация">
-            <source src="videos/cookies-and-milk.mp4" type="video/mp4" />
+          <video controls playsinline preload="none" loading="lazy" poster="images/cookies-and-milk-poster.webp" aria-label="Печенье и молоко, анимация">
+            <source src="videos/cookies-and-milk.mp4" type='video/mp4; codecs="avc1.64001F, mp4a.40.2"' />
+            <source src="videos/cookies-and-milk.webm" type='video/webm; codecs="vp9, opus"' />
           </video>
         </div>
         <figcaption class="work__cap">Печенье и молоко, анимация</figcaption>
       </figure>
       <figure class="work" style="--ar: 9 / 16">
         <div class="work__media work__media--video">
-          <video controls playsinline preload="metadata" loading="lazy" poster="images/animated-breakfast-poster.webp" aria-label="Анимация завтрака">
-            <source src="videos/animated-breakfast.mp4" type="video/mp4" />
+          <video controls playsinline preload="none" loading="lazy" poster="images/animated-breakfast-poster.webp" aria-label="Анимация завтрака">
+            <source src="videos/animated-breakfast.mp4" type='video/mp4; codecs="avc1.64001F, mp4a.40.2"' />
+            <source src="videos/animated-breakfast.webm" type='video/webm; codecs="vp9, opus"' />
           </video>
         </div>
         <figcaption class="work__cap">Анимация завтрака</figcaption>
@@ -495,16 +558,18 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
     <div class="work-row">
       <figure class="work" style="--ar: 9 / 16">
         <div class="work__media work__media--video">
-          <video controls playsinline preload="metadata" loading="lazy" poster="images/city-monochrome-poster.webp" aria-label="Город в чёрно-белом">
-            <source src="videos/city-monochrome.mp4" type="video/mp4" />
+          <video controls playsinline preload="none" loading="lazy" poster="images/city-monochrome-poster.webp" aria-label="Город в чёрно-белом">
+            <source src="videos/city-monochrome.mp4" type='video/mp4; codecs="avc1.640020, mp4a.40.2"' />
+            <source src="videos/city-monochrome.webm" type='video/webm; codecs="vp9, opus"' />
           </video>
         </div>
         <figcaption class="work__cap">Город в чёрно-белом</figcaption>
       </figure>
       <figure class="work">
         <div class="work__media work__media--video">
-          <video controls playsinline preload="metadata" loading="lazy" poster="images/studio-portrait-poster.webp" aria-label="Студийный мужской портрет">
-            <source src="videos/studio-portrait.mp4" type="video/mp4" />
+          <video controls playsinline preload="none" loading="lazy" poster="images/studio-portrait-poster.webp" aria-label="Студийный мужской портрет">
+            <source src="videos/studio-portrait.mp4" type='video/mp4; codecs="avc1.64001F, mp4a.40.2"' />
+            <source src="videos/studio-portrait.webm" type='video/webm; codecs="vp9, opus"' />
           </video>
         </div>
         <figcaption class="work__cap">Студийный мужской портрет</figcaption>
@@ -518,5 +583,41 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
     <a href="#">наверх</a>
   </footer>
 </div>
+<script>
+(() => {
+  let activePlayer;
+
+  function activate(player) {
+    if (activePlayer && activePlayer !== player) activePlayer.pause();
+    activePlayer = player;
+    player.removeAttribute('loading');
+  }
+
+  for (const player of document.querySelectorAll('.work__media video')) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'work__play';
+    button.setAttribute('aria-label', `Воспроизвести «${player.getAttribute('aria-label')}»`);
+    player.after(button);
+
+    button.addEventListener('click', () => {
+      activate(player);
+      player.play().catch(() => { button.hidden = false; });
+    });
+    player.addEventListener('play', () => {
+      if (player.paused) return;
+      activate(player);
+      if (document.activeElement === button) player.focus({ preventScroll: true });
+      button.hidden = true;
+    });
+    player.addEventListener('pause', () => {
+      if (activePlayer === player) activePlayer = undefined;
+      if (player.currentTime === 0) button.hidden = false;
+    });
+    player.addEventListener('ended', () => { button.hidden = false; });
+    player.addEventListener('error', () => { button.hidden = false; });
+  }
+})();
+</script>
 </body>
 </html>
