@@ -48,6 +48,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 }
 .intro__bio, .services { grid-column: 1 / 9; }
 .intro__bio, .services {
+  text-wrap: pretty;
   font-size: 32px;
   line-height: 1.2;
   letter-spacing: -0.03em;
@@ -61,7 +62,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 @media (hover: hover) { .services__item:hover { color: var(--ink); } }
 
 /* Divider */
-.rule { border: 0; border-top: 1px solid var(--line); margin: 32px 0; }
+.rule { border: 0; border-top: 1px solid var(--line); margin: 48px 0 32px; }
 
 /* Works */
 .works {
@@ -124,10 +125,6 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .work__cap { font-size: 15px; }
 }
 
-@media (max-width: 1399px) {
-  .br-d { display: none; }
-}
-
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
 }
@@ -139,7 +136,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
     <h1 class="intro__bio"><strong>Никита Иванов</strong>, <span class="nw">AI-креатор</span>. Генерирую фото и&nbsp;видео для&nbsp;брендов: от&nbsp;рекламных визуалов и&nbsp;предметки без&nbsp;студии до&nbsp;роликов для&nbsp;соцсетей и&nbsp;анимации. Обучаю нейросеть на&nbsp;айдентике бренда, чтобы стиль, цвет и&nbsp;характер держались в&nbsp;каждом кадре. <span class="intro__contact">Написать&nbsp;→ <a class="intro__link" href="https://t.me/">Telegram</a></span></h1>
 
     <div class="services">
-      <p><span class="services__item"><b>Могу помочь с&nbsp;видео</b>: ролики для&nbsp;соцсетей, продуктовые и&nbsp;анимационные, OLV, цифровая наружка и&nbsp;заставки <br class="br-d">для&nbsp;мероприятий.</span> <span class="services__item"><b>С&nbsp;фото</b>: рекламные визуалы, предметка для&nbsp;каталогов и&nbsp;маркетплейсов, фуд, нейрофотосессии, <span class="nw">AI-аватары</span>, маскоты, <br class="br-d">3D и&nbsp;иллюстрации.</span> <span class="services__item"><b>И&nbsp;с&nbsp;регулярным потоком</b>: соберу стайлгайд и&nbsp;референсы, чтобы SMM, каталоги и&nbsp;сезонные кампании не&nbsp;расползались по&nbsp;стилю.</span></p>
+      <p><span class="services__item"><b>Могу помочь с&nbsp;видео</b>: ролики для&nbsp;соцсетей, продуктовые и&nbsp;анимационные, OLV, цифровая наружка и&nbsp;заставки&nbsp;для&nbsp;мероприятий.</span> <span class="services__item"><b>С&nbsp;фото</b>: рекламные визуалы, предметка для&nbsp;каталогов и&nbsp;маркетплейсов, фуд, нейрофотосессии, <span class="nw">AI-аватары</span>, маскоты, 3D&nbsp;и&nbsp;иллюстрации.</span> <span class="services__item"><b>И&nbsp;с&nbsp;регулярным потоком</b>: соберу стайлгайд и&nbsp;референсы, чтобы SMM, каталоги и&nbsp;сезонные кампании не&nbsp;расползались по&nbsp;стилю.</span></p>
     </div>
   </section>
 
