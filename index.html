@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600&display=swap" rel="stylesheet" />
-<link href="https://fonts.googleapis.com/css2?family=Geist+Mono&text=PLAYSTO0123456789%3A&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono&text=0123456789%3A&display=swap" rel="stylesheet" />
 <style>
 /* Tokens */
 :root {
@@ -46,7 +46,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .page { position: relative; padding: var(--pad) var(--pad) 0; }
 
 /* Mark */
-.mark { position: absolute; top: calc(var(--pad) + 5px); right: var(--pad); display: block; color: var(--ink); }
+.mark { position: absolute; top: calc(var(--pad) + 3px); right: var(--pad); display: block; color: var(--ink); }
 .mark__eyes { fill: var(--bg); transition: transform .5s var(--ease); }
 @media (hover: hover) { .mark:hover .mark__eyes { transform: translateY(-4px); } }
 
@@ -118,8 +118,6 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   border-radius: 6px;
   background: var(--media-bg);
   aspect-ratio: var(--ar, 16 / 9);
-  clip-path: inset(0 0 0 0 round 6px);
-  transition: clip-path .167s linear;
 }
 .work__media video {
   display: block;
@@ -127,7 +125,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   height: 100%;
   object-fit: contain;
   background: var(--ink);
-  transition: transform .167s linear;
+  transition: transform 1.2s cubic-bezier(.22, 1, .36, 1);
 }
 /* 10% shade over the cover, gone while the clip plays */
 .work__media::after {
@@ -158,8 +156,8 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 /* Touch: Koto's thin ring with a play mark, centred */
 .work__ring { display: none; }
 @media (max-width: 700px), (hover: none) and (pointer: coarse) {
-  .work__ring { display: block; width: 24px; height: 24px; }
-  .work__ring circle { stroke: var(--bg); stroke-width: 1.25; opacity: .2; }
+  .work__ring { display: block; width: 48px; height: 48px; }
+  .work__ring circle { stroke: var(--bg); stroke-width: .625; opacity: .2; }
   .work__ring path { fill: var(--bg); opacity: .5; }
 }
 .work__cap {
@@ -167,29 +165,14 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   font-size: 16px;
   line-height: 1.4;
   letter-spacing: 0;
+  color: var(--muted);
+  transition: color .2s;
 }
-.work__sub { color: var(--muted); }
-/* Desktop: caption sits under the frame, the frame lifts 24px on hover */
-@media (hover: hover) and (min-width: 701px) {
-  .work { position: relative; }
+/* Bruno-style hover: caption darkens, picture eases in 1.5% */
+@media (hover: hover) {
   .work__media.is-cursor, .work__media.is-cursor .work__play, .work__media.is-cursor video { cursor: none; }
-  .work__cap {
-    position: absolute;
-    inset: auto 0 0;
-    z-index: 0;
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
-    margin: 0;
-    height: 24px;
-    line-height: 24px;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-  .work__sep { display: none; }
-  .work__sub { text-overflow: ellipsis; overflow: hidden; }
-  .work:hover .work__media:not(.is-playing) { clip-path: inset(0 0 24px 0 round 6px); }
-  .work:hover .work__media:not(.is-playing) video { transform: translateY(-12px); }
+  .work:hover .work__cap { color: var(--ink); }
+  .work:hover .work__media:not(.is-playing) video { transform: scale(1.015); }
 }
 /* Player bar, after Koto */
 .vc {
@@ -261,9 +244,9 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   -webkit-backdrop-filter: blur(40px);
   backdrop-filter: blur(40px);
   color: var(--bg);
-  font: 11px/11px 'Geist Mono', ui-monospace, monospace;
+  font: 400 11px/11px 'Geist', system-ui, sans-serif;
   text-transform: uppercase;
-  letter-spacing: 0;
+  letter-spacing: .02em;
   pointer-events: none;
   opacity: 0;
   transition: opacity .167s linear;
@@ -309,8 +292,9 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 /* Phone */
 @media (max-width: 700px) {
   .intro { grid-template-columns: 1fr; }
-  .intro__bio, .services { grid-column: 1; font-size: 25px; }
-  .mark { position: static; float: left; margin: 1px 8px 0 0; }
+  .intro__bio, .services { grid-column: 1; font-size: 24px; }
+  .mark { position: static; float: left; width: 28px; height: 28px; margin: 0 8px 0 0; }
+  .intro .nw { white-space: normal; }
   .rule { margin: 24px 0; }
   .works { --work-row-gap: 32px; }
   .work-row {
@@ -341,7 +325,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 <div class="page">
 <main>
   <section class="intro">
-    <h1 class="intro__bio"><svg class="mark" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><path d="M18.3463 2.16413C20.7467 1.52094 23.6196 4.45934 24.7633 8.72663C26.8644 16.5681 25.0001 24.9991 13.9996 24.9991C3.13834 24.9989 0.997112 16.4625 3.06992 8.72663C4.21352 4.45931 7.08743 1.52113 9.48789 2.16413C11.1138 2.60001 12.1038 4.5679 12.2193 7.11824C12.7988 7.04106 13.3935 6.99911 13.9996 6.99909C14.5479 6.99909 15.0871 7.03337 15.6139 7.09675C15.734 4.55673 16.7248 2.5987 18.3463 2.16413Z" fill="currentColor"/><g class="mark__eyes"><path d="M10.4996 17.2686C9.73136 16.8252 8.93703 16.8208 8.29062 16.9532C7.36577 17.1429 6.82338 18.0808 7.12168 18.9766C7.33018 19.6026 7.73152 20.2889 8.49961 20.7325C9.26783 21.176 10.0631 21.1803 10.7096 21.0479C11.6344 20.8584 12.1765 19.9202 11.8785 19.0245C11.67 18.3983 11.268 17.7123 10.4996 17.2686Z"/><path d="M19.5875 16.9532C18.941 16.8207 18.1459 16.825 17.3775 17.2686C16.6096 17.7123 16.2081 18.3985 15.9996 19.0245C15.7018 19.92 16.2431 20.8581 17.1676 21.0479C17.8139 21.1804 18.6093 21.1758 19.3775 20.7325C20.1457 20.289 20.5469 19.6026 20.7555 18.9766C21.0538 18.0807 20.5125 17.1428 19.5875 16.9532Z"/></g></svg><strong>Никита Иванов</strong>. Привет! Я&nbsp;создаю фото и&nbsp;видео для&nbsp;брендов <br class="br">с&nbsp;помощью AI. Использую его на&nbsp;реальных коммерческих <br class="br">проектах вместе с&nbsp;привычными <span class="nw">дизайн-инструментами</span>. <br class="br">Веду проект целиком, от&nbsp;брифа до&nbsp;готовых материалов, <br class="br">или&nbsp;подключаюсь к&nbsp;команде студии на&nbsp;этапе продакшена. <br class="br">Сохраняю визуальный стиль бренда во&nbsp;всей серии и&nbsp;адаптирую <br class="br">контент под&nbsp;разные каналы и&nbsp;рынки. <span class="intro__contact">Написать&nbsp;<span class="intro__arrow">→</span> <a class="intro__link" href="https://t.me/">Telegram</a></span></h1>
+    <h1 class="intro__bio"><svg class="mark" width="32" height="32" viewBox="0 0 28 28" aria-hidden="true"><path d="M18.3463 2.16413C20.7467 1.52094 23.6196 4.45934 24.7633 8.72663C26.8644 16.5681 25.0001 24.9991 13.9996 24.9991C3.13834 24.9989 0.997112 16.4625 3.06992 8.72663C4.21352 4.45931 7.08743 1.52113 9.48789 2.16413C11.1138 2.60001 12.1038 4.5679 12.2193 7.11824C12.7988 7.04106 13.3935 6.99911 13.9996 6.99909C14.5479 6.99909 15.0871 7.03337 15.6139 7.09675C15.734 4.55673 16.7248 2.5987 18.3463 2.16413Z" fill="currentColor"/><g class="mark__eyes"><path d="M10.4996 17.2686C9.73136 16.8252 8.93703 16.8208 8.29062 16.9532C7.36577 17.1429 6.82338 18.0808 7.12168 18.9766C7.33018 19.6026 7.73152 20.2889 8.49961 20.7325C9.26783 21.176 10.0631 21.1803 10.7096 21.0479C11.6344 20.8584 12.1765 19.9202 11.8785 19.0245C11.67 18.3983 11.268 17.7123 10.4996 17.2686Z"/><path d="M19.5875 16.9532C18.941 16.8207 18.1459 16.825 17.3775 17.2686C16.6096 17.7123 16.2081 18.3985 15.9996 19.0245C15.7018 19.92 16.2431 20.8581 17.1676 21.0479C17.8139 21.1804 18.6093 21.1758 19.3775 20.7325C20.1457 20.289 20.5469 19.6026 20.7555 18.9766C21.0538 18.0807 20.5125 17.1428 19.5875 16.9532Z"/></g></svg><strong>Никита Иванов</strong>. Привет! Я&nbsp;создаю фото и&nbsp;видео для&nbsp;брендов <br class="br">с&nbsp;помощью AI. Использую его на&nbsp;реальных коммерческих <br class="br">проектах вместе с&nbsp;привычными <span class="nw">дизайн-инструментами</span>. <br class="br">Веду проект целиком, от&nbsp;брифа до&nbsp;готовых материалов, <br class="br">или&nbsp;подключаюсь к&nbsp;команде студии на&nbsp;этапе продакшена. <br class="br">Сохраняю визуальный стиль бренда во&nbsp;всей серии и&nbsp;адаптирую <br class="br">контент под&nbsp;разные каналы и&nbsp;рынки. <span class="intro__contact">Написать&nbsp;<span class="intro__arrow">→</span> <a class="intro__link" href="https://t.me/">Telegram</a></span></h1>
 
     <div class="services">
       <p><b>Что делаю и&nbsp;чем могу помочь.</b> <b>В&nbsp;видео</b> это&nbsp;<span class="svc">ролики для&nbsp;соцсетей</span>, <br class="br"><span class="svc">продуктовые и&nbsp;анимационные видео</span>, <span class="svc">реклама для&nbsp;YouTube и&nbsp;Smart&nbsp;TV</span>, <br class="br"><span class="svc">цифровая наружная реклама</span>, <span class="svc">заставки и&nbsp;анонсы для&nbsp;мероприятий</span>. <br class="br"><b>В&nbsp;фото</b> это&nbsp;<span class="svc">баннеры и&nbsp;<span class="nw">кей-вижуалы</span></span>, <span class="svc">предметные съёмки для&nbsp;каталогов <br class="br">и&nbsp;маркетплейсов</span>, <span class="svc">креативные съёмки продукта</span>, <span class="svc"><span class="nw">фуд-визуалы</span></span>, <br class="br"><span class="svc">нейрофотосессии</span>, <span class="svc"><span class="nw">AI-аватары</span></span> и&nbsp;<span class="svc">маскоты</span>, <span class="svc">3D</span>&nbsp;и&nbsp;<span class="svc">иллюстрации</span>.</p>
@@ -359,7 +343,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
             <source src="videos/cheetos-concept.mp4" type='video/mp4; codecs="avc1.640028, mp4a.40.2"' />
           </video>
         </div>
-        <figcaption class="work__cap"><span class="work__title">Рекламный ролик</span><span class="work__sep">, </span><span class="work__sub">3D-анимация</span></figcaption>
+        <figcaption class="work__cap">Рекламный ролик, 3D-анимация</figcaption>
       </figure>
       <figure class="work work--portrait" style="--ar: 9 / 16">
         <div class="work__media work__media--video">
@@ -368,7 +352,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
             <source src="videos/stadium-sports.mp4" type='video/mp4; codecs="avc1.64001F, mp4a.40.2"' />
           </video>
         </div>
-        <figcaption class="work__cap"><span class="work__title">Спортивная реклама</span><span class="work__sep">, </span><span class="work__sub">динамичный монтаж</span></figcaption>
+        <figcaption class="work__cap">Спортивная реклама, динамичный монтаж</figcaption>
       </figure>
     </div>
 
@@ -380,7 +364,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
             <source src="videos/magnit-sign.mp4" type='video/mp4; codecs="avc1.64001F, mp4a.40.2"' />
           </video>
         </div>
-        <figcaption class="work__cap"><span class="work__title">Имиджевый ролик</span><span class="work__sep">, </span><span class="work__sub">моушн-дизайн</span></figcaption>
+        <figcaption class="work__cap">Имиджевый ролик, моушн-дизайн</figcaption>
       </figure>
       <figure class="work work--portrait" style="--ar: 240 / 427">
         <div class="work__media work__media--video">
@@ -389,7 +373,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
             <source src="videos/animated-family.mp4" type='video/mp4; codecs="avc1.64001E, mp4a.40.2"' />
           </video>
         </div>
-        <figcaption class="work__cap"><span class="work__title">Сюжетный ролик</span><span class="work__sep">, </span><span class="work__sub">3D-анимация</span></figcaption>
+        <figcaption class="work__cap">Сюжетный ролик, 3D-анимация</figcaption>
       </figure>
     </div>
 
@@ -401,7 +385,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
             <source src="videos/pastry-filling.mp4" type='video/mp4; codecs="avc1.64001F, mp4a.40.2"' />
           </video>
         </div>
-        <figcaption class="work__cap"><span class="work__title">Фуд-ролик</span><span class="work__sep">, </span><span class="work__sub">макросъёмка</span></figcaption>
+        <figcaption class="work__cap">Фуд-ролик, макросъёмка</figcaption>
       </figure>
       <figure class="work work--portrait" style="--ar: 9 / 16">
         <div class="work__media work__media--video">
@@ -410,7 +394,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
             <source src="videos/city-monochrome.mp4" type='video/mp4; codecs="avc1.640020, mp4a.40.2"' />
           </video>
         </div>
-        <figcaption class="work__cap"><span class="work__title">Лайфстайл-ролик</span><span class="work__sep">, </span><span class="work__sub">чёрно-белая стилистика</span></figcaption>
+        <figcaption class="work__cap">Лайфстайл-ролик, чёрно-белая стилистика</figcaption>
       </figure>
     </div>
 
@@ -422,7 +406,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
             <source src="videos/ugc-product.mp4" type='video/mp4; codecs="avc1.640020, mp4a.40.2"' />
           </video>
         </div>
-        <figcaption class="work__cap"><span class="work__title">UGC-ролик</span><span class="work__sep">, </span><span class="work__sub">обзор</span></figcaption>
+        <figcaption class="work__cap">UGC-ролик, обзор</figcaption>
       </figure>
       <figure class="work">
         <div class="work__media work__media--video">
@@ -431,7 +415,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
             <source src="videos/fashion.mp4" type='video/mp4; codecs="avc1.640032, mp4a.40.2"' />
           </video>
         </div>
-        <figcaption class="work__cap"><span class="work__title">Фэшн-ролик</span><span class="work__sep">, </span><span class="work__sub">кинематографичная подача</span></figcaption>
+        <figcaption class="work__cap">Фэшн-ролик, кинематографичная подача</figcaption>
       </figure>
     </div>
 
@@ -443,7 +427,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
             <source src="videos/skincare-outdoors.mp4" type='video/mp4; codecs="avc1.640020, mp4a.40.2"' />
           </video>
         </div>
-        <figcaption class="work__cap"><span class="work__title">Бьюти-ролик</span><span class="work__sep">, </span><span class="work__sub">контрастный свет</span></figcaption>
+        <figcaption class="work__cap">Бьюти-ролик, контрастный свет</figcaption>
       </figure>
       <figure class="work">
         <div class="work__media work__media--video">
@@ -452,7 +436,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
             <source src="videos/beauty.mp4" type='video/mp4; codecs="avc1.64001F, mp4a.40.2"' />
           </video>
         </div>
-        <figcaption class="work__cap"><span class="work__title">Бьюти-ролик</span><span class="work__sep">, </span><span class="work__sub">студийные крупные планы</span></figcaption>
+        <figcaption class="work__cap">Бьюти-ролик, студийные крупные планы</figcaption>
       </figure>
     </div>
 
@@ -464,7 +448,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
             <source src="videos/automotive.mp4" type='video/mp4; codecs="avc1.640028, mp4a.40.2"' />
           </video>
         </div>
-        <figcaption class="work__cap"><span class="work__title">Автомобильная реклама</span><span class="work__sep">, </span><span class="work__sub">кинематографичный монтаж</span></figcaption>
+        <figcaption class="work__cap">Автомобильная реклама, кинематографичный монтаж</figcaption>
       </figure>
       <figure class="work">
         <div class="work__media work__media--video">
@@ -473,7 +457,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
             <source src="videos/coastal-fashion.mp4" type='video/mp4; codecs="avc1.640028, mp4a.40.2"' />
           </video>
         </div>
-        <figcaption class="work__cap"><span class="work__title">Фэшн-ролик</span><span class="work__sep">, </span><span class="work__sub">журнальная эстетика</span></figcaption>
+        <figcaption class="work__cap">Фэшн-ролик, журнальная эстетика</figcaption>
       </figure>
     </div>
 
@@ -485,7 +469,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
             <source src="videos/serum-demo.mp4" type='video/mp4; codecs="avc1.640028, mp4a.40.2"' />
           </video>
         </div>
-        <figcaption class="work__cap"><span class="work__title">UGC-ролик</span><span class="work__sep">, </span><span class="work__sub">демонстрация</span></figcaption>
+        <figcaption class="work__cap">UGC-ролик, демонстрация</figcaption>
       </figure>
       <figure class="work work--portrait" style="--ar: 3 / 4">
         <div class="work__media work__media--video">
@@ -494,7 +478,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
             <source src="videos/jewelry-sunlight.mp4" type='video/mp4; codecs="avc1.640020, mp4a.40.2"' />
           </video>
         </div>
-        <figcaption class="work__cap"><span class="work__title">Ювелирная реклама</span><span class="work__sep">, </span><span class="work__sub">контрастный свет</span></figcaption>
+        <figcaption class="work__cap">Ювелирная реклама, контрастный свет</figcaption>
       </figure>
     </div>
 
@@ -506,7 +490,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
             <source src="videos/poolside-products.mp4" type='video/mp4; codecs="avc1.64001F, mp4a.40.2"' />
           </video>
         </div>
-        <figcaption class="work__cap"><span class="work__title">Предметный ролик</span><span class="work__sep">, </span><span class="work__sub">лайфстайл</span></figcaption>
+        <figcaption class="work__cap">Предметный ролик, лайфстайл</figcaption>
       </figure>
       <figure class="work">
         <div class="work__media work__media--video">
@@ -515,7 +499,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
             <source src="videos/raspberry-drink.mp4" type='video/mp4; codecs="avc1.64001F, mp4a.40.2"' />
           </video>
         </div>
-        <figcaption class="work__cap"><span class="work__title">Продуктовая реклама</span><span class="work__sep">, </span><span class="work__sub">сюрреализм</span></figcaption>
+        <figcaption class="work__cap">Продуктовая реклама, сюрреализм</figcaption>
       </figure>
     </div>
 
@@ -527,7 +511,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
             <source src="videos/seaside-white-dress.mp4" type='video/mp4; codecs="avc1.64001F, mp4a.40.2"' />
           </video>
         </div>
-        <figcaption class="work__cap"><span class="work__title">Фэшн-ролик</span><span class="work__sep">, </span><span class="work__sub">атмосферный портрет</span></figcaption>
+        <figcaption class="work__cap">Фэшн-ролик, атмосферный портрет</figcaption>
       </figure>
       <figure class="work work--portrait" style="--ar: 9 / 16">
         <div class="work__media work__media--video">
@@ -536,7 +520,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
             <source src="videos/coastal-drive.mp4" type='video/mp4; codecs="avc1.640020, mp4a.40.2"' />
           </video>
         </div>
-        <figcaption class="work__cap"><span class="work__title">Автомобильный ролик</span><span class="work__sep">, </span><span class="work__sub">пейзажная съёмка</span></figcaption>
+        <figcaption class="work__cap">Автомобильный ролик, пейзажная съёмка</figcaption>
       </figure>
     </div>
 
@@ -548,7 +532,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
             <source src="videos/car-in-motion.mp4" type='video/mp4; codecs="avc1.640020, mp4a.40.2"' />
           </video>
         </div>
-        <figcaption class="work__cap"><span class="work__title">Автомобильный ролик</span><span class="work__sep">, </span><span class="work__sub">следящая камера</span></figcaption>
+        <figcaption class="work__cap">Автомобильный ролик, следящая камера</figcaption>
       </figure>
       <figure class="work work--portrait" style="--ar: 9 / 16">
         <div class="work__media work__media--video">
@@ -557,7 +541,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
             <source src="videos/almond-drink.mp4" type='video/mp4; codecs="avc1.640020, mp4a.40.2"' />
           </video>
         </div>
-        <figcaption class="work__cap"><span class="work__title">Продуктовая реклама</span><span class="work__sep">, </span><span class="work__sub">анимация жидкости</span></figcaption>
+        <figcaption class="work__cap">Продуктовая реклама, анимация жидкости</figcaption>
       </figure>
     </div>
 
@@ -569,7 +553,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
             <source src="videos/pastry-trio.mp4" type='video/mp4; codecs="avc1.64001F, mp4a.40.2"' />
           </video>
         </div>
-        <figcaption class="work__cap"><span class="work__title">Фуд-ролик</span><span class="work__sep">, </span><span class="work__sub">анимация и типографика</span></figcaption>
+        <figcaption class="work__cap">Фуд-ролик, анимация и типографика</figcaption>
       </figure>
       <figure class="work work--portrait" style="--ar: 40 / 71">
         <div class="work__media work__media--video">
@@ -578,7 +562,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
             <source src="videos/animated-bread.mp4" type='video/mp4; codecs="avc1.64001F, mp4a.40.2"' />
           </video>
         </div>
-        <figcaption class="work__cap"><span class="work__title">Рекламная анимация</span><span class="work__sep">, </span><span class="work__sub">маскот</span></figcaption>
+        <figcaption class="work__cap">Рекламная анимация, маскот</figcaption>
       </figure>
     </div>
 
@@ -590,7 +574,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
             <source src="videos/kitchen-fashion.mp4" type='video/mp4; codecs="avc1.640028, mp4a.40.2"' />
           </video>
         </div>
-        <figcaption class="work__cap"><span class="work__title">Фэшн-ролик</span><span class="work__sep">, </span><span class="work__sub">прямой жёсткий свет</span></figcaption>
+        <figcaption class="work__cap">Фэшн-ролик, прямой жёсткий свет</figcaption>
       </figure>
       <figure class="work work--portrait" style="--ar: 9 / 16">
         <div class="work__media work__media--video">
@@ -599,7 +583,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
             <source src="videos/cookies-and-milk.mp4" type='video/mp4; codecs="avc1.64001F, mp4a.40.2"' />
           </video>
         </div>
-        <figcaption class="work__cap"><span class="work__title">Рекламная анимация</span><span class="work__sep">, </span><span class="work__sub">персонажи</span></figcaption>
+        <figcaption class="work__cap">Рекламная анимация, персонажи</figcaption>
       </figure>
     </div>
 
@@ -611,7 +595,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
             <source src="videos/fashion-backstage.mp4" type='video/mp4; codecs="avc1.640020, mp4a.40.2"' />
           </video>
         </div>
-        <figcaption class="work__cap"><span class="work__title">Фэшн-ролик</span><span class="work__sep">, </span><span class="work__sub">стилизация под бэкстейдж</span></figcaption>
+        <figcaption class="work__cap">Фэшн-ролик, стилизация под бэкстейдж</figcaption>
       </figure>
       <figure class="work work--portrait" style="--ar: 3 / 4">
         <div class="work__media work__media--video">
@@ -620,7 +604,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
             <source src="videos/desert-fashion.mp4" type='video/mp4; codecs="avc1.640020, mp4a.40.2"' />
           </video>
         </div>
-        <figcaption class="work__cap"><span class="work__title">Фэшн-ролик</span><span class="work__sep">, </span><span class="work__sub">минимализм</span></figcaption>
+        <figcaption class="work__cap">Фэшн-ролик, минимализм</figcaption>
       </figure>
     </div>
 
@@ -632,7 +616,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
             <source src="videos/animated-breakfast.mp4" type='video/mp4; codecs="avc1.64001F, mp4a.40.2"' />
           </video>
         </div>
-        <figcaption class="work__cap"><span class="work__title">Фуд-ролик</span><span class="work__sep">, </span><span class="work__sub">графическая анимация</span></figcaption>
+        <figcaption class="work__cap">Фуд-ролик, графическая анимация</figcaption>
       </figure>
       <figure class="work">
         <div class="work__media work__media--video">
@@ -641,7 +625,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
             <source src="videos/reading-worlds.mp4" type='video/mp4; codecs="avc1.640028, mp4a.40.2"' />
           </video>
         </div>
-        <figcaption class="work__cap"><span class="work__title">Сюжетный ролик</span><span class="work__sep">, </span><span class="work__sub">фэнтези</span></figcaption>
+        <figcaption class="work__cap">Сюжетный ролик, фэнтези</figcaption>
       </figure>
     </div>
 
@@ -653,7 +637,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
             <source src="videos/jewelry-portrait.mp4" type='video/mp4; codecs="avc1.640020, mp4a.40.2"' />
           </video>
         </div>
-        <figcaption class="work__cap"><span class="work__title">Ювелирная реклама</span><span class="work__sep">, </span><span class="work__sub">портрет</span></figcaption>
+        <figcaption class="work__cap">Ювелирная реклама, портрет</figcaption>
       </figure>
       <figure class="work work--portrait" style="--ar: 3 / 4">
         <div class="work__media work__media--video">
@@ -662,7 +646,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
             <source src="videos/jewelry-bracelet.mp4" type='video/mp4; codecs="avc1.640020, mp4a.40.2"' />
           </video>
         </div>
-        <figcaption class="work__cap"><span class="work__title">Ювелирная реклама</span><span class="work__sep">, </span><span class="work__sub">макросъёмка</span></figcaption>
+        <figcaption class="work__cap">Ювелирная реклама, макросъёмка</figcaption>
       </figure>
     </div>
 
@@ -674,7 +658,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
             <source src="videos/jewelry-ring.mp4" type='video/mp4; codecs="avc1.640020, mp4a.40.2"' />
           </video>
         </div>
-        <figcaption class="work__cap"><span class="work__title">Ювелирная реклама</span><span class="work__sep">, </span><span class="work__sub">портретный крупный план</span></figcaption>
+        <figcaption class="work__cap">Ювелирная реклама, портретный крупный план</figcaption>
       </figure>
       <figure class="work">
         <div class="work__media work__media--video">
@@ -683,7 +667,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
             <source src="videos/studio-portrait.mp4" type='video/mp4; codecs="avc1.64001F, mp4a.40.2"' />
           </video>
         </div>
-        <figcaption class="work__cap"><span class="work__title">Кинематографичный студийный портрет</span></figcaption>
+        <figcaption class="work__cap">Кинематографичный студийный портрет</figcaption>
       </figure>
     </div>
   </section>
@@ -771,7 +755,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
       if (next === mode) return;
       mode = next;
       el.innerHTML = next === 'stop'
-        ? '<span>Stop</span><svg viewBox="0 0 10 10" fill="currentColor"><rect x="2.31" y="1.27" width="1.43" height="7.46"/><rect x="6.26" y="1.27" width="1.43" height="7.46"/></svg>'
+        ? '<svg viewBox="0 0 10 10" fill="currentColor"><rect x="2.31" y="1.27" width="1.43" height="7.46"/><rect x="6.26" y="1.27" width="1.43" height="7.46"/></svg><span>Stop</span>'
         : '<svg viewBox="0 0 10 10" fill="currentColor"><path d="M9.39 5 2.89 8.75V1.25Z"/></svg><span>Play</span>';
     };
     return {
