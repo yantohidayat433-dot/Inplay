@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600&display=swap" rel="stylesheet" />
-<link href="https://fonts.googleapis.com/css2?family=Geist+Mono&text=PLAY&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono&text=PLAYSTO0123456789%3A&display=swap" rel="stylesheet" />
 <style>
 /* Tokens */
 :root {
@@ -127,6 +127,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   height: 100%;
   object-fit: contain;
   background: var(--ink);
+  transition: transform .167s linear;
 }
 /* 10% shade over the cover, gone while the clip plays */
 .work__media::after {
@@ -171,7 +172,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 /* Desktop: caption sits under the frame, the frame lifts 24px on hover */
 @media (hover: hover) and (min-width: 701px) {
   .work { position: relative; }
-  .work__play { cursor: none; }
+  .work__media.is-cursor, .work__media.is-cursor .work__play, .work__media.is-cursor video { cursor: none; }
   .work__cap {
     position: absolute;
     inset: auto 0 0;
@@ -188,7 +189,63 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .work__sep { display: none; }
   .work__sub { text-overflow: ellipsis; overflow: hidden; }
   .work:hover .work__media:not(.is-playing) { clip-path: inset(0 0 24px 0 round 6px); }
+  .work:hover .work__media:not(.is-playing) video { transform: translateY(-12px); }
 }
+/* Player bar, after Koto */
+.vc {
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 24px 12px 8px;
+  background: linear-gradient(transparent, rgb(0 0 0 / .35));
+  color: var(--bg);
+}
+.vc[hidden] { display: none; }
+.vc__btn {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border: 0;
+  padding: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: background-color .167s linear;
+}
+.vc__btn::after { content: ''; position: absolute; inset: -8px; }
+.vc__btn svg { width: 10px; height: 10px; opacity: .5; transition: opacity .167s linear; }
+.vc__btn:hover { background: rgb(255 255 255 / .1); }
+.vc__btn:hover svg, .vc__btn:focus-visible svg { opacity: 1; }
+.vc__track {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 0;
+  cursor: pointer;
+  touch-action: none;
+}
+.vc__line { position: relative; height: 1px; background: rgb(255 255 255 / .2); }
+.vc__fill {
+  position: absolute;
+  inset: 0;
+  background: rgb(255 255 255 / .5);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.vc__time {
+  font: 11px/11px 'Geist Mono', ui-monospace, monospace;
+  color: rgb(255 255 255 / .7);
+  font-variant-numeric: tabular-nums;
+  margin-right: -8px;
+}
+.vc button:focus-visible, .vc__track:focus-visible { outline: 1px solid var(--accent); outline-offset: 2px; }
+
 /* Desktop play cursor, after Koto */
 .play-cursor {
   position: fixed;
@@ -215,6 +272,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .play-cursor.is-on { opacity: 1; }
 .play-cursor svg { width: 10px; height: 10px; flex: none; }
 .play-cursor span { position: relative; top: 1px; }
+.vc { cursor: default; }
 /* Scroll reveal, as on the portfolio */
 .js .work {
   opacity: 0;
@@ -704,17 +762,31 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
     const el = document.createElement('div');
     el.className = 'play-cursor';
     el.setAttribute('aria-hidden', 'true');
-    el.innerHTML = '<svg viewBox="0 0 10 10"><path d="M9.39 5 2.89 8.75V1.25Z" fill="currentColor"/></svg><span>Play</span>';
     document.body.append(el);
+    let mode;
     const place = event => {
       el.style.transform = `translate(${event.clientX}px, ${event.clientY}px) translate(-50%, -50%)`;
     };
+    const setMode = next => {
+      if (next === mode) return;
+      mode = next;
+      el.innerHTML = next === 'stop'
+        ? '<span>Stop</span><svg viewBox="0 0 10 10" fill="currentColor"><rect x="2.31" y="1.27" width="1.43" height="7.46"/><rect x="6.26" y="1.27" width="1.43" height="7.46"/></svg>'
+        : '<svg viewBox="0 0 10 10" fill="currentColor"><path d="M9.39 5 2.89 8.75V1.25Z"/></svg><span>Play</span>';
+    };
     return {
-      show(event) { if (!fine.matches || event.pointerType !== 'mouse') return; place(event); el.classList.add('is-on'); },
-      move(event) { if (el.classList.contains('is-on')) place(event); },
+      show(event, next) {
+        if (!fine.matches || event.pointerType !== 'mouse') return;
+        setMode(next);
+        place(event);
+        el.classList.add('is-on');
+      },
       hide() { el.classList.remove('is-on'); },
     };
   })();
+
+  let lastPointer = { clientX: -100, clientY: -100, pointerType: 'mouse' };
+  window.addEventListener('pointermove', event => { lastPointer = event; }, { passive: true });
 
   const works = document.querySelectorAll('.work');
   if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -726,6 +798,79 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
     works.forEach(work => work.classList.add('is-revealed'));
   }
 
+  const ICON = {
+    play: '<path d="M9.39 5 2.89 8.75V1.25Z"/>',
+    pause: '<rect x="2.31" y="1.27" width="1.43" height="7.46"/><rect x="6.26" y="1.27" width="1.43" height="7.46"/>',
+    soundOn: '<path d="M5.98 9.27v-1c.73-.21 1.32-.62 1.77-1.22.44-.6.67-1.28.67-2.05s-.23-1.45-.67-2.05a3.2 3.2 0 0 0-1.77-1.22v-1c1.01.23 1.83.74 2.46 1.53.64.79.95 1.7.95 2.74s-.31 1.94-.95 2.74a4.3 4.3 0 0 1-2.46 1.53ZM.61 6.48V3.55h1.95L5 1.11v7.8L2.56 6.48H.61Z"/>',
+    soundOff: '<path d="M2.34 6.64V3.36h2.19L7.26.63v8.75L4.53 6.64H2.34Z"/>',
+  };
+  const icon = name => `<svg viewBox="0 0 10 10" aria-hidden="true" fill="currentColor">${ICON[name]}</svg>`;
+  const clock = t => `${String(Math.floor(t / 60)).padStart(2, '0')}:${String(Math.floor(t % 60)).padStart(2, '0')}`;
+
+  // Koto-style bar: play/pause, hairline progress, time, sound
+  function controls(player) {
+    const bar = document.createElement('div');
+    bar.className = 'vc';
+    bar.innerHTML = `<button type="button" class="vc__btn vc__toggle" aria-label="Пауза">${icon('pause')}</button>`
+      + '<div class="vc__track" role="slider" tabindex="0" aria-label="Перемотка" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="vc__line"><div class="vc__fill"></div></div></div>'
+      + `<span class="vc__time">00:00</span><button type="button" class="vc__btn vc__sound" aria-label="Выключить звук">${icon('soundOn')}</button>`;
+    player.parentElement.append(bar);
+    const [toggle, sound] = bar.querySelectorAll('button');
+    const track = bar.querySelector('.vc__track');
+    const fill = bar.querySelector('.vc__fill');
+    const time = bar.querySelector('.vc__time');
+    let frame;
+
+    const paint = () => {
+      const d = player.duration || 0;
+      const t = player.currentTime || 0;
+      fill.style.transform = `scaleX(${d ? t / d : 0})`;
+      time.textContent = clock(t);
+      track.setAttribute('aria-valuenow', d ? Math.round(t / d * 100) : 0);
+    };
+    const loop = () => { paint(); frame = requestAnimationFrame(loop); };
+    const syncToggle = () => {
+      const playing = !player.paused;
+      toggle.innerHTML = icon(playing ? 'pause' : 'play');
+      toggle.setAttribute('aria-label', playing ? 'Пауза' : 'Воспроизвести');
+    };
+    const syncSound = () => {
+      sound.innerHTML = icon(player.muted ? 'soundOff' : 'soundOn');
+      sound.setAttribute('aria-label', player.muted ? 'Включить звук' : 'Выключить звук');
+    };
+    const seekTo = event => {
+      const r = track.getBoundingClientRect();
+      const k = Math.min(1, Math.max(0, (event.clientX - r.left) / r.width));
+      if (player.duration) player.currentTime = k * player.duration;
+      paint();
+    };
+
+    toggle.addEventListener('click', () => (player.paused ? player.play() : player.pause()));
+    sound.addEventListener('click', () => { player.muted = !player.muted; });
+    track.addEventListener('pointerdown', event => {
+      track.setPointerCapture(event.pointerId);
+      seekTo(event);
+      const move = e => seekTo(e);
+      const up = () => { track.removeEventListener('pointermove', move); track.removeEventListener('pointerup', up); };
+      track.addEventListener('pointermove', move);
+      track.addEventListener('pointerup', up);
+    });
+    track.addEventListener('keydown', event => {
+      const step = { ArrowLeft: -5, ArrowRight: 5 }[event.key];
+      if (!step || !player.duration) return;
+      event.preventDefault();
+      player.currentTime = Math.min(player.duration, Math.max(0, player.currentTime + step));
+      paint();
+    });
+    player.addEventListener('click', () => { if (!bar.hidden) player.paused ? player.play() : player.pause(); });
+    player.addEventListener('play', () => { syncToggle(); cancelAnimationFrame(frame); loop(); });
+    player.addEventListener('pause', () => { syncToggle(); cancelAnimationFrame(frame); paint(); });
+    player.addEventListener('volumechange', syncSound);
+    player.addEventListener('seeked', paint);
+    player.addEventListener('loadedmetadata', paint);
+    return bar;
+  }
+
   for (const player of document.querySelectorAll('.work__media video')) {
     const button = document.createElement('button');
     button.type = 'button';
@@ -734,17 +879,27 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
     player.after(button);
 
     button.innerHTML = '<svg class="work__ring" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="none"/><path d="M15.39 12 8.89 15.75V8.25Z"/></svg>';
-    button.addEventListener('pointerenter', event => cursor.show(event));
-    button.addEventListener('pointermove', event => cursor.move(event));
-    button.addEventListener('pointerleave', () => cursor.hide());
+    const media = player.parentElement;
+    const track = event => {
+      if (event.target.closest('.vc')) { cursor.hide(); media.classList.remove('is-cursor'); return; }
+      media.classList.add('is-cursor');
+      cursor.show(event, player.paused ? 'play' : 'stop');
+    };
+    media.addEventListener('pointerenter', track);
+    media.addEventListener('pointermove', track);
+    media.addEventListener('pointerleave', () => { cursor.hide(); media.classList.remove('is-cursor'); });
+    player.addEventListener('play', () => { if (media.classList.contains('is-cursor')) cursor.show(lastPointer, 'stop'); });
+    player.addEventListener('pause', () => { if (media.classList.contains('is-cursor')) cursor.show(lastPointer, 'play'); });
+
+    const bar = controls(player);
 
     function showCoverPlay(show) {
       const moveFocus = !show && document.activeElement === button;
       button.hidden = !show;
-      player.controls = !show;
+      player.controls = false;
+      bar.hidden = show;
       player.parentElement.classList.toggle('is-playing', !show);
-      if (!show) cursor.hide();
-      if (moveFocus) player.focus({ preventScroll: true });
+      if (moveFocus) bar.querySelector('button').focus({ preventScroll: true });
     }
 
     showCoverPlay(true);
