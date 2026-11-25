@@ -127,14 +127,14 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   background: var(--ink);
   transition: transform 1.2s cubic-bezier(.22, 1, .36, 1);
 }
-/* 10% shade over the cover, gone while the clip plays */
+/* 20% shade at rest, lifted on hover and while the clip plays */
 .work__media::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgb(0 0 0 / .1);
+  background: rgb(0 0 0 / .2);
   pointer-events: none;
-  transition: opacity .167s linear;
+  transition: opacity 1.2s cubic-bezier(.22, 1, .36, 1);
 }
 .work__media.is-playing::after { opacity: 0; }
 .work__play {
@@ -173,6 +173,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .work__media.is-cursor, .work__media.is-cursor .work__play, .work__media.is-cursor video { cursor: none; }
   .work:hover .work__cap { color: var(--ink); }
   .work:hover .work__media:not(.is-playing) video { transform: scale(1.015); }
+  .work:hover .work__media::after { opacity: 0; }
 }
 /* Player bar, after Koto */
 .vc {
